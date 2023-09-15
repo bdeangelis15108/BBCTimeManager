@@ -1,0 +1,136 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #shiftResourcesForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="shiftResources.id">{{l("EditShiftResources")}}</span>
+                        <span *ngIf="!shiftResources.id">{{l("CreateNewShiftResources")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="ResourcesName">{{l("Resources")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ResourcesName" name="resourcesName" [(ngModel)]="resourcesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectResourcesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setResourcesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="shiftResources.resourcesId" [(ngModel)]="shiftResources.resourcesId" type="text" required hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="PayTypesCode">{{l("PayTypes")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="PayTypesCode" name="payTypesCode" [(ngModel)]="payTypesCode" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectPayTypesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setPayTypesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="shiftResources.payTypesId" [(ngModel)]="shiftResources.payTypesId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="JobPhaseCodesName">{{l("JobPhaseCodes")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobPhaseCodesName" name="jobPhaseCodesName" [(ngModel)]="jobPhaseCodesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectJobPhaseCodesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setJobPhaseCodesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="shiftResources.jobPhaseCodesId" [(ngModel)]="shiftResources.jobPhaseCodesId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="JobCategoriesName">{{l("JobCategories")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobCategoriesName" name="jobCategoriesName" [(ngModel)]="jobCategoriesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectJobCategoriesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setJobCategoriesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="shiftResources.jobCategoriesId" [(ngModel)]="shiftResources.jobCategoriesId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="TimesheetsName">{{l("Timesheets")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="TimesheetsName" name="timesheetsName" [(ngModel)]="timesheetsName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectTimesheetsModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setTimesheetsIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="shiftResources.timesheetsId" [(ngModel)]="shiftResources.timesheetsId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="ShiftsName">{{l("Shifts")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ShiftsName" name="shiftsName" [(ngModel)]="shiftsName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectShiftsModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setShiftsIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="shiftResources.shiftsId" [(ngModel)]="shiftResources.shiftsId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="WorkerClaseesName">{{l("WorkerClasees")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="WorkerClaseesName" name="workerClaseesName" [(ngModel)]="workerClaseesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectWorkerClaseesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setWorkerClaseesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="shiftResources.workerClaseesId" [(ngModel)]="shiftResources.workerClaseesId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="ShiftResources_HoursWorked">{{l("HoursWorked")}}</label>
+									<input type="number" id="ShiftResources_HoursWorked" class="form-control" [(ngModel)]="shiftResources.hoursWorked" name="HoursWorked"   />
+								</div>
+					
+								<div class="form-group">
+									<label for="ShiftResources_Name">{{l("Name")}}</label>
+									<input type="text" id="ShiftResources_Name" class="form-control" [(ngModel)]="shiftResources.name" name="Name"   minlength="1"  maxlength="50" />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!shiftResourcesForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<shiftResourcesResourcesLookupTableModal #shiftResourcesResourcesLookupTableModal (modalSave)="getNewResourcesId()"></shiftResourcesResourcesLookupTableModal>
+		 <shiftResourcesPayTypesLookupTableModal #shiftResourcesPayTypesLookupTableModal (modalSave)="getNewPayTypesId()"></shiftResourcesPayTypesLookupTableModal>
+		 <shiftResourcesJobPhaseCodesLookupTableModal #shiftResourcesJobPhaseCodesLookupTableModal (modalSave)="getNewJobPhaseCodesId()"></shiftResourcesJobPhaseCodesLookupTableModal>
+		 <shiftResourcesJobCategoriesLookupTableModal #shiftResourcesJobCategoriesLookupTableModal (modalSave)="getNewJobCategoriesId()"></shiftResourcesJobCategoriesLookupTableModal>
+		 <shiftResourcesTimesheetsLookupTableModal #shiftResourcesTimesheetsLookupTableModal (modalSave)="getNewTimesheetsId()"></shiftResourcesTimesheetsLookupTableModal>
+		 <shiftResourcesShiftsLookupTableModal #shiftResourcesShiftsLookupTableModal (modalSave)="getNewShiftsId()"></shiftResourcesShiftsLookupTableModal>
+		 <shiftResourcesWorkerClaseesLookupTableModal #shiftResourcesWorkerClaseesLookupTableModal (modalSave)="getNewWorkerClaseesId()"></shiftResourcesWorkerClaseesLookupTableModal>
+		 
+</div>

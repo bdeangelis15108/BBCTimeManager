@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:Nucleus.ViewModels.Base;assembly=Nucleus.Mobile.Shared" 
+             xmlns:extensions="clr-namespace:Nucleus.Extensions.MarkupExtensions;assembly=Nucleus.Mobile.Shared" 
+             xmlns:behaviors="clr-namespace:Nucleus.Behaviors"
+             x:Class="Nucleus.Views.TimesheetPerShiftView"
+             base:ViewManager.AutoWireViewModel="true"
+             Title="{Binding Title}"
+             NavigationPage.HasBackButton="True">
+   
+    <ContentPage.Content>
+        <StackLayout Grid.Row="1" BackgroundColor="{StaticResource DefaultBackgroundColor}">
+
+            <ListView x:Name="lvShiftResoucesSubmit" HasUnevenRows="True"  SeparatorVisibility="None" ItemsSource="{Binding shiftResourceSubmit,Mode=TwoWay}"  ItemTapped="lvShiftResoucesSubmit_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame HasShadow="true"  Margin="10">
+                                <StackLayout Orientation="Horizontal" Margin="0,20,0,20"  >
+                                    <Grid HorizontalOptions="FillAndExpand"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="4.5*" />
+                                            <ColumnDefinition Width="4*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions  >
+                                            <RowDefinition Height="0.5*" />
+                                        </Grid.RowDefinitions>
+
+                                        <StackLayout  Grid.Column="0"  HorizontalOptions="End"  VerticalOptions="Center">
+                                            <Image>
+                                                <Image.Triggers>
+                                                    <DataTrigger TargetType="Image"
+                                                                 Binding="{Binding Name}"
+                                                                 Value="Timesheet">
+                                                        <Setter Property="Source" Value="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_calendar.png'}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Image"
+                                                                 Binding="{Binding Name}"
+                                                                    Value="Employees">
+                                                        <Setter Property="Source" Value="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_EmpIcon.png'}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Image"
+                                                                 Binding="{Binding Name}"
+                                                                    Value="Equipment">
+                                                        <Setter Property="Source" Value="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_EqpIcon.png'}"/>
+                                                    </DataTrigger>
+                                                </Image.Triggers>
+                                            </Image>
+                                        </StackLayout>
+
+                                        <StackLayout  Grid.Column="1"  VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand">
+
+                                            <Label  Text="{Binding Name}"  FontFamily="{StaticResource RegularFontFamily}"  FontSize="{StaticResource StatsNumberFontSize}"  TextColor="{StaticResource TextColor}" />
+                                        </StackLayout>
+
+                                        <StackLayout  Grid.Column="2"  VerticalOptions="End" HorizontalOptions="End" >
+                                            <CheckBox  x:Name="{Binding Name}"  IsChecked="{Binding IsChecked}" />
+
+                                        </StackLayout>
+                                    </Grid>
+
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout  Margin="20,20,5,5" VerticalOptions="End" HorizontalOptions="End">
+                <Button x:Name="btn_Sumit" Text="Submit"
+			Padding="10"
+                        Clicked="btn_Sumit_Clicked"
+                    BackgroundColor="{StaticResource ButtonBackgroundColor}" 
+                    TextColor="{StaticResource WhiteColor}" 
+                    CornerRadius="10"></Button>
+            </StackLayout>
+
+        </StackLayout>
+        
+    </ContentPage.Content>
+    <ContentPage.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="Appearing">
+            <behaviors:ActionCollection>
+                <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+            </behaviors:ActionCollection>
+        </behaviors:EventHandlerBehavior>
+    </ContentPage.Behaviors>
+</ContentPage>

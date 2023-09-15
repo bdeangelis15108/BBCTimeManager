@@ -1,0 +1,63 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #addressesForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="addresses.id">{{l("EditAddresses")}}</span>
+                        <span *ngIf="!addresses.id">{{l("CreateNewAddresses")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="Addresses_Linne1">{{l("Linne1")}}</label>
+									<input type="text" id="Addresses_Linne1" class="form-control" [(ngModel)]="addresses.linne1" name="Linne1"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="Addresses_Line2">{{l("Line2")}}</label>
+									<input type="text" id="Addresses_Line2" class="form-control" [(ngModel)]="addresses.line2" name="Line2"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="Addresses_City">{{l("City")}}</label>
+									<input type="text" id="Addresses_City" class="form-control" [(ngModel)]="addresses.city" name="City"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="Addresses_State">{{l("State")}}</label>
+									<input type="text" id="Addresses_State" class="form-control" [(ngModel)]="addresses.state" name="State"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="Addresses_Zip">{{l("Zip")}}</label>
+									<input type="text" id="Addresses_Zip" class="form-control" [(ngModel)]="addresses.zip" name="Zip"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="Addresses_Lan">{{l("Lan")}}</label>
+									<input type="text" id="Addresses_Lan" class="form-control" [(ngModel)]="addresses.lan" name="Lan"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="Addresses_Lat">{{l("Lat")}}</label>
+									<input type="text" id="Addresses_Lat" class="form-control" [(ngModel)]="addresses.lat" name="Lat"   minlength="1"  maxlength="50" />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!addressesForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

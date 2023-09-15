@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage    xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
+                xmlns:base="clr-namespace:Nucleus.ViewModels.Base;assembly=Nucleus.Mobile.Shared"
+                x:Class="Nucleus.Views.EmployeeReviewView"
+                base:ViewManager.AutoWireViewModel="true"
+                xmlns:behaviors="clr-namespace:Nucleus.Behaviors;assembly=Nucleus.Mobile.Shared"
+                Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="CONFIRM" Clicked="ToolbarItem_Clicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid BackgroundColor="Black">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <ScrollView Grid.Column="0"  Orientation="Neither" VerticalOptions="FillAndExpand" BackgroundColor="Black">
+                    <Grid x:Name="gv_EmpReviews" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.7*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="0.5*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackLayout  Grid.Row="0" Grid.Column="0" BackgroundColor="#B7B7B7" >
+                        <Label Text="{Binding SelectedDT}" Margin="0,2,0,1" HorizontalTextAlignment="Center" FontAttributes="Bold"
+                                           TextColor="Black"
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="1" Margin="0, 2, 0, 0" Padding="0, 0, 0, 5" BackgroundColor="{StaticResource GrayColor}">
+                        <Label Text="REG" Margin="5,10" TextColor="Black" FontAttributes="Bold"  FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="2" Margin="0, 1, 0, 0" BackgroundColor="{StaticResource GrayColor}">
+                        <Label Text="OT" Margin="5,10" TextColor="Black" FontAttributes="Bold"   FontFamily="{StaticResource RegularFontFamily}"  FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="3" Margin="0, 1, 0, 0" BackgroundColor="{StaticResource GrayColor}">
+                            <Label Text="DT"
+                                   FontAttributes="Bold" 
+                                           Margin="5,10"
+                                           TextColor="Black"  
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="4" Margin="0, 1, 0, 0" BackgroundColor="{StaticResource GrayColor}">
+                        <Label Text="OT1.8"
+                               FontAttributes="Bold" 
+                                           Margin="5,10"
+                                           TextColor="Black"       
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="5" Margin="0, 1, 0, 0" BackgroundColor="{StaticResource GrayColor}">
+                        <Label Text="REG+10"
+                               FontAttributes="Bold" 
+                                           Margin="5,10"
+                                           TextColor="Black"       
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="6" Margin="0, 1, 0, 0" BackgroundColor="{StaticResource GrayColor}">
+                        <Label Text="REG+15"
+                               FontAttributes="Bold" 
+                                           Margin="5,10"
+                                           TextColor="Black"       
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="7" Margin="0, 1, 0, 0" BackgroundColor="{StaticResource GrayColor}">
+                        <Label Text="OT+10"
+                               FontAttributes="Bold" 
+                                           Margin="5,10"
+                                           TextColor="Black"       
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="8" Margin="0, 1, 0, 0" BackgroundColor="{StaticResource GrayColor}">
+                        <Label Text="AWL"
+                               FontAttributes="Bold" 
+                                           Margin="5,10"
+                                           TextColor="Black"       
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="9" Margin="0, 1, 0, 0" BackgroundColor="{StaticResource GrayColor}">
+                        <Label Text="AWOL"
+                               FontAttributes="Bold" 
+                                           Margin="5,10"
+                                           TextColor="Black"       
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="10" Margin="0, 1, 0, 0" BackgroundColor="{StaticResource GrayColor}">
+                        <Label Text="ILL"
+                               FontAttributes="Bold" 
+                                           Margin="5,10"
+                                           TextColor="Black"       
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="11" Margin="0, 1, 0, 0" BackgroundColor="{StaticResource GrayColor}">
+                            <Label Text="VAC"
+                                   FontAttributes="Bold" 
+                                           Margin="5,10"
+                                           TextColor="Black"       
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                        <StackLayout Grid.Row="12" Margin="0, 1, 0, 0" BackgroundColor="{StaticResource GrayColor}">
+                            <Label Text="HOL"
+                                   FontAttributes="Bold" 
+                                           Margin="5,10"
+                                           TextColor="Black"       
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                        </StackLayout>
+                    </Grid>
+                </ScrollView>
+            
+                <StackLayout Grid.Column="1"  Margin="-4,0,0,0" BackgroundColor="Black">
+                    <ScrollView VerticalOptions="Fill" Orientation="Horizontal">
+                    <StackLayout WidthRequest="1400" Orientation="Horizontal">
+                        <Grid HorizontalOptions="FillAndExpand" RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.7*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="0.5*"/>
+                            </Grid.RowDefinitions>
+                            <RelativeLayout Grid.Row="0"
+						HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource GrayColor}">
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                              SeparatorColor="Black"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout HeightRequest="30"
+												WidthRequest="250">
+                                                        <Frame BackgroundColor="Transparent" Padding="5, 10, 5, 0">
+                                                            <Label WidthRequest="250"  TextColor="Black" LineBreakMode="WordWrap" FontAttributes="Bold" HorizontalTextAlignment="Center" Text="{Binding resourceName}"/>
+                                                        </Frame>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="1"   Margin="0,2,0,0"  BackgroundColor="White"
+						HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90">
+                                                    <StackLayout HeightRequest="30"
+												WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black" HorizontalTextAlignment="Center" Text="{Binding RegAmount}"/>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="2" Margin="0,1,0,0"  BackgroundColor="White"
+							HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                              RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                              RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                              RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                              CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout
+												 WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black"  HorizontalTextAlignment="Center" Text="{Binding OTamount}"/>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="3" Margin="0,1,0,0"  BackgroundColor="White"
+					    HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout
+											    WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black"  HorizontalTextAlignment="Center" Text="{Binding DTamount}"/>
+                                                    </StackLayout>
+                                                </ContentView>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="4" Margin="0,1,0,0"  BackgroundColor="White"
+					    HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout
+											    WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black"  HorizontalTextAlignment="Center" Text="{Binding OT18amount}"/>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="5" Margin="0,1,0,0"  BackgroundColor="White"
+					    HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout
+											    WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black" HorizontalTextAlignment="Center" Text="{Binding REG10amount}"/>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="6" Margin="0,1,0,0"  BackgroundColor="White"
+					    HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout
+											    WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black" HorizontalTextAlignment="Center" Text="{Binding REG15amount}"/>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="7" Margin="0,1,0,0"  BackgroundColor="White"
+					    HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout
+											    WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black"  HorizontalTextAlignment="Center" Text="{Binding OT10amount}"/>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="8" Margin="0,1,0,0"  BackgroundColor="White"
+					    HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout
+											    WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black"  HorizontalTextAlignment="Center" Text="{Binding AWLamount}"/>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="9" Margin="0,1,0,0"  BackgroundColor="White"
+					    HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout
+											    WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black" HorizontalTextAlignment="Center" Text="{Binding AWOLamount}"/>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="10" Margin="0,1,0,0"  BackgroundColor="White"
+					    HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout
+											    WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black" HorizontalTextAlignment="Center" Text="{Binding ILLamount}"/>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="11" Margin="0,1,0,0"  BackgroundColor="White"
+					    HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                            RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout
+											    WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black" HorizontalTextAlignment="Center" Text="{Binding VACamount}"/>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                            <RelativeLayout Grid.Row="12" Margin="0,1,0,0"  BackgroundColor="White"
+							HorizontalOptions="FillAndExpand" >
+                                <ListView IsEnabled="False" Rotation="270" ItemsSource="{Binding EmployeesToReviewAmount}" RowHeight="100" SeparatorVisibility="Default"
+                                  SeparatorColor="Black"
+                              RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                              RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                              RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=100}"
+                              RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                              CachingStrategy="RecycleElement" BackgroundColor="Transparent">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <ContentView  Rotation="90" BackgroundColor="Transparent">
+                                                    <StackLayout
+												 WidthRequest="250">
+                                                        <Label   WidthRequest="250" Margin="0, 10, 0, 0" TextColor="Black"  HorizontalTextAlignment="Center" Text="{Binding HOLamount}"/>
+                                                    </StackLayout>
+
+                                                </ContentView>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </RelativeLayout>
+                        </Grid>
+                    </StackLayout>
+                </ScrollView>
+                </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+    <ContentPage.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="Appearing">
+            <behaviors:ActionCollection>
+                <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+            </behaviors:ActionCollection>
+        </behaviors:EventHandlerBehavior>
+    </ContentPage.Behaviors>
+</ContentPage>

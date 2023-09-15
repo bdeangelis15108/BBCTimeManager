@@ -1,0 +1,605 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:Nucleus.ViewModels.Base;assembly=Nucleus.Mobile.Shared"
+             x:Class="Nucleus.Views.TimesheetPerJobView"
+             base:ViewManager.AutoWireViewModel="true"
+             xmlns:extensions="clr-namespace:Nucleus.Extensions.MarkupExtensions;assembly=Nucleus.Mobile.Shared" xmlns:behaviors="clr-namespace:Nucleus.Behaviors"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource DefaultBackgroundColor}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem  Text="{Binding Toolbar_name}" Clicked="ToolbarItem_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content >
+        
+        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand">
+           
+            <!--#region Absolute Layout for pop up-->
+            <AbsoluteLayout IsVisible="True" BackgroundColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Image x:Name="bg_timesheet" IsVisible="false" WidthRequest="500" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0.5, 0.5, 0.5, 0.5" AbsoluteLayout.LayoutFlags="All"  Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.bg_timesheet.png'}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="8*"/>
+                        <!--<RowDefinition Height="2.5*"/>-->
+                    </Grid.RowDefinitions>
+                    <!--#region  Timesheet -->
+                    <ScrollView VerticalOptions="Fill"  Orientation="Horizontal">
+                        <StackLayout WidthRequest="1400" Orientation="Horizontal">
+                            <ListView x:Name="lv_TimesheetTable" BackgroundColor="Transparent"  HasUnevenRows="True" Grid.Row="0" SeparatorColor="Transparent" SeparatorVisibility="Default" ItemsSource="{Binding TimesheetLineItems}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <StackLayout>
+                                                <Grid x:Name="Equipment" IsVisible="False" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" ColumnSpacing="0" RowSpacing="0">
+                                                    <Grid.RowDefinitions >
+                                                        <RowDefinition Height="1*"></RowDefinition>
+                                                        <RowDefinition Height="1" />
+                                                        <RowDefinition Height="1*"></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions >
+                                                        <ColumnDefinition Width="250" />
+                                                        <ColumnDefinition Width="250" />
+                                                        <ColumnDefinition Width="250" />
+                                                        <ColumnDefinition Width="250" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <!--#region Column 1 -->
+                                                    <StackLayout Grid.Column="0" Grid.Row="0" Padding="5"  BackgroundColor="{StaticResource GrayColor}">
+                                                        <StackLayout>
+                                                            <Label Text="{Binding JobName}" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                                            <Label Text="{Binding SelectedDate}" TextColor="Black" HorizontalTextAlignment="Center"/>
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="0" Grid.Row="2" Padding="15" BackgroundColor="White">
+                                                        <StackLayout>
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="30"/>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Image Grid.Column="0"  WidthRequest="30" HeightRequest="30" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_EqpIcon.png'}"></Image>
+                                                                <Label Grid.Column="1" TextColor="Black"  LineBreakMode="WordWrap" Text="{Binding ResourceName}"/>
+                                                            </Grid>
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+                                                    <BoxView Grid.Row="0" Grid.Column="0" BackgroundColor="Black" HeightRequest="1" VerticalOptions="End"/>
+                                                    <BoxView Grid.Row="0" Grid.Column="1" BackgroundColor="Black" HeightRequest="1" VerticalOptions="End"/>
+                                                    <BoxView Grid.Row="0" Grid.Column="2" BackgroundColor="Black" HeightRequest="1" VerticalOptions="End"/>
+                                                    <BoxView Grid.Row="0" Grid.Column="3" BackgroundColor="Black" HeightRequest="1" VerticalOptions="End"/>
+
+                                                    <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="Black" HeightRequest="1" VerticalOptions="End"/>
+                                                    <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="Black" HeightRequest="1" VerticalOptions="End"/>
+                                                    <BoxView Grid.Row="1" Grid.Column="2" BackgroundColor="Black" HeightRequest="1" VerticalOptions="End"/>
+                                                    <BoxView Grid.Row="1" Grid.Column="3" BackgroundColor="Black" HeightRequest="1" VerticalOptions="End"/>
+                                                    <!--#region Column 2-->
+                                                    <StackLayout Grid.Column="1" Padding="15" Grid.Row="0" BackgroundColor="{StaticResource GrayColor}">
+                                                        <Label Text="Usage Hours"  TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="1"  Grid.Row="2" BackgroundColor="{Binding UsageColor}">
+                                                        <Entry Keyboard="Numeric" IsEnabled="{Binding UsageEnabled}" x:Name="usageentry" Text="{Binding EquipmentUsage}" HorizontalTextAlignment="Center" BackgroundColor="Transparent" ClearButtonVisibility="WhileEditing"/>
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="selected_tap_usage" NumberOfTapsRequired="2" CommandParameter="{Binding ResourceId}"/>
+                                                            <!--TapGestureRecognizer Command="{Binding  Path=BindingContext.selected_UsageCommand, Source={x:Reference lv_TimesheetTable}}" CommandParameter="{Binding ResourceId}"/-->
+                                                        </StackLayout.GestureRecognizers>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+                                                    <!--#region Column 3-->
+
+                                                    <StackLayout Grid.Column="2" Padding="15" Grid.Row="0" BackgroundColor="{StaticResource GrayColor}">
+                                                        <Label Text="Category Code"  TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="2"  Grid.Row="2" BackgroundColor="{Binding UsageColor}">
+                                                        <Picker x:Name="pk_eq_JobCategoryCode" Title="Category Code" TextColor="Black" HorizontalOptions="Center" TitleColor="Black" FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource StatsCaptionFontSize}" SelectedItem="{Binding SelectedJobCategoryCode,Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" ItemsSource="{Binding Path=BindingContext.PhaseCategoryCode, Source={x:Reference lv_TimesheetTable } }" />
+                                                        <Image Margin="80,-30,-70,30" BackgroundColor="Transparent" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_downArrow.png'}"/>
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="Arrow_OnTapped_JobCategoryEquipment" />
+                                                        </StackLayout.GestureRecognizers>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+                                                    <!--#region Column 4-->
+                                                    <StackLayout Grid.Column="3" Padding="15" Grid.Row="0" BackgroundColor="{StaticResource GrayColor}">
+                                                        <Label Padding="0,15" Text="PhaseCode" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="3"  Grid.Row="2" BackgroundColor="{Binding UsageColor}">
+                                                        <Picker x:Name="pk_eq_Phasecode" Title="PhaseCode"    TextColor="Black" HorizontalOptions="Center" TitleColor="Black" FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource StatsCaptionFontSize}" SelectedItem="{Binding SelectedPhaseCode,Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" ItemsSource="{Binding Path=BindingContext.PhaseCode, Source={x:Reference lv_TimesheetTable } }" />
+                                                        <Image Margin="80,-30,-70,30"  BackgroundColor="Transparent" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_downArrow.png'}"/>
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="Arrow_OnTapped_PhaseCodeEquipment" />
+                                                        </StackLayout.GestureRecognizers>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+                                                    <Grid.Triggers>
+                                                        <DataTrigger TargetType="Grid"  Binding="{Binding Type}" Value="Employees">
+                                                            <Setter Property="IsVisible" Value="False"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Grid"  Binding="{Binding Type}" Value="Equipment">
+                                                            <Setter Property="IsVisible" Value="True"/>
+                                                        </DataTrigger>
+                                                    </Grid.Triggers>
+                                                </Grid>
+
+                                                <Grid x:Name="Employees" IsVisible="False" BackgroundColor="Black">
+                                                    <Grid.RowDefinitions >
+                                                        <RowDefinition Height="1*"></RowDefinition>
+                                                        <RowDefinition Height="1*"></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions >
+                                                        <ColumnDefinition Width="200" />
+                                                        <ColumnDefinition Width="90" />
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition Width="0.5*"/>
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+
+
+                                                    <!--#region Column 1 -->
+                                                    <StackLayout Grid.Column="0" Grid.Row="0" Padding="7 0 0 0" BackgroundColor="{StaticResource GrayColor}">
+                                                        <StackLayout>
+                                                            <Label Text="{Binding JobName}" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                                            <Label Text="{Binding SelectedDate}" TextColor="Black" HorizontalTextAlignment="Center"/>
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="0" Grid.Row="1" Margin="-5 0 0 0" Padding="25 10 10 5" BackgroundColor="White" >
+                                                        <StackLayout>
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="0.5*"/>
+                                                                    <ColumnDefinition Width="1*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <StackLayout  Grid.Column="0"  >
+                                                                    <Image WidthRequest="30" VerticalOptions="CenterAndExpand" HeightRequest="30"  Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_EmpIcon.png'}"></Image>
+                                                                </StackLayout>
+                                                                <Label Grid.Column="1" LineBreakMode="WordWrap" Text="{Binding ResourceName}" FontFamily="{StaticResource RegularFontFamily}" TextColor="Black" FontSize="{StaticResource StatsCaptionFontSize}"/>
+                                                            </Grid>
+
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+
+                                                    <!--#region Column 2-->
+                                                    <StackLayout Grid.Column="1"  Grid.Row="0" Margin="0 0 0 -5" Padding="7 0 0 0" BackgroundColor="{StaticResource GrayColor}">
+                                                        <Label Padding="0,15" VerticalOptions="Center" Text="Class" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="1"  Grid.Row="1" Margin="-5 0 0 -5"  Padding="25 0 0 0"  BackgroundColor="White" HorizontalOptions="FillAndExpand">
+                                                        <Picker x:Name="workClass"  TextColor="Black" HorizontalOptions="Center" TitleColor="Black" FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource StatsCaptionFontSize}" SelectedItem="{Binding WorkerClass,Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" ItemsSource="{Binding Path=BindingContext.workerClaseesDto, Source={x:Reference lv_TimesheetTable } }" />
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+
+                                                    <!--#region Column 3-->
+                                                    <StackLayout Grid.Column="2" Grid.Row="0"  Margin="0 0 0 -5" Padding="7 0 0 0" BackgroundColor="{StaticResource GrayColor}" >
+                                                        <Label Padding="0,15" Text="PhaseCode" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="2" Grid.Row="1" Margin="-5 0 0 -5"  Padding="15 0 0 0" BackgroundColor="White">
+                                                        <Picker x:Name="pk_Phasecode" Title="PhaseCode"    TextColor="Black" HorizontalOptions="Center" TitleColor="Black" FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource StatsCaptionFontSize}" SelectedItem="{Binding SelectedPhaseCode,Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" ItemsSource="{Binding Path=BindingContext.PhaseCode, Source={x:Reference lv_TimesheetTable } }" />
+                                                        <Image Margin="80,-30,0,30"  BackgroundColor="Transparent" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_downArrow.png'}">
+                                                            <Image.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="Arrow_OnTapped_PhaseCode" />
+                                                            </Image.GestureRecognizers>
+                                                        </Image>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+
+                                                    <!--#region Column 4-->
+                                                    <StackLayout Grid.Column="3" Grid.Row="0"  Margin="0 0 0 -5" Padding="7 0 0 0" BackgroundColor="{StaticResource GrayColor}" >
+                                                        <Label Padding="0,15" Text="CategoryCode" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="3" Grid.Row="1" Margin="-5 0 0 -5" Padding="15 0 0 0" BackgroundColor="White">
+                                                        <Picker x:Name="pk_JobCategoryCode" Title="Category Code"    TextColor="Black" HorizontalOptions="Center" TitleColor="Black" FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource StatsCaptionFontSize}" SelectedItem="{Binding SelectedJobCategoryCode,Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" ItemsSource="{Binding Path=BindingContext.PhaseCategoryCode, Source={x:Reference lv_TimesheetTable } }" />
+                                                        <Image Margin="80,-30,0,30" BackgroundColor="Transparent" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_downArrow.png'}">
+                                                            <Image.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="Arrow_OnTapped_JobCategory" />
+                                                            </Image.GestureRecognizers>
+                                                        </Image>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+
+                                                    <!--#region Column 5-->
+                                                    <StackLayout Grid.Column="4" Grid.Row="0"  Margin="0 0 0 -5" Padding="7 0 0 0"  BackgroundColor="{StaticResource GrayColor}" >
+                                                        <Picker x:Name="pk_PayType1"  Title="Regular" WidthRequest="70" FontAttributes="Bold" HorizontalOptions="Center" TitleColor="Black" FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource StatsCaptionFontSize}" SelectedItem="{Binding Section1,Mode=TwoWay}"  ItemDisplayBinding="{Binding DescriptionCode}" ItemsSource="{Binding Path=BindingContext.PayTypes1, Source={x:Reference lv_TimesheetTable } }" />
+                                                        <Image Margin="80,-30,0,30" BackgroundColor="Transparent" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_downArrow.png'}">
+                                                            <Image.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="Arrow_OnTapped" />
+                                                            </Image.GestureRecognizers>
+                                                        </Image>
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="4" Grid.Row="1" Margin="-5 0 0 -5" Padding="15 0 0 0" BackgroundColor="{Binding paytype1Color}">
+                                                        <Entry x:Name="pk_paytypeEntry1"  IsEnabled="{Binding paytype1Enabled}" Keyboard="Numeric"  TextColor="Black"  HorizontalTextAlignment="Center"  Text="{Binding Paytype1Text,StringFormat='{0:F2}'}" ClearButtonVisibility="WhileEditing"/>
+                                                        <Label Text="Min=0,Max=24" TextColor="Red" IsVisible="{Binding IsValid}"/>
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="selected_tap_paytype1" NumberOfTapsRequired="2" CommandParameter="{Binding ResourceId}"/>
+                                                            <!--TapGestureRecognizer Command="{Binding  Path=BindingContext.selected_paytype1Command, Source={x:Reference lv_TimesheetTable}}" CommandParameter="{Binding ResourceId}"/-->
+                                                        </StackLayout.GestureRecognizers>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+
+                                                    <!--#region Column 6-->
+                                                    <StackLayout Grid.Column="5" Grid.Row="0"  Margin="0 0 0 -5" Padding="7 0 0 0" BackgroundColor="{StaticResource GrayColor}" >
+                                                        <Picker x:Name="pk_PayType2" Title="Overtime" WidthRequest="70" FontAttributes="Bold" HorizontalOptions="Center" TitleColor="Black" FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource StatsCaptionFontSize}" SelectedItem="{Binding Section2,Mode=TwoWay}" ItemDisplayBinding="{Binding DescriptionCode}" ItemsSource="{Binding Path=BindingContext.PayTypes2, Source={x:Reference lv_TimesheetTable } }" />
+                                                        <Image Margin="80,-30,0,30" BackgroundColor="Transparent" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_downArrow.png'}">
+                                                            <Image.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="Arrow_OnTapped_pk2" />
+                                                            </Image.GestureRecognizers>
+                                                        </Image>
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="5" Grid.Row="1" Margin="-5 0 0 -5" Padding="15 0 0 0" BackgroundColor="{Binding paytype2Color}">
+                                                        <Entry  x:Name="pk_paytypeEntry2" IsEnabled="{Binding paytype2Enabled}"  Keyboard="Numeric"   TextColor="Black" HorizontalTextAlignment="Center" Text="{Binding Paytype2Text,StringFormat='{0:F2}'}" ClearButtonVisibility="WhileEditing" />
+                                                        <Label Text="Min=0,Max=24" TextColor="Red" IsVisible="{Binding IsPaytype2Valid}"/>
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="selected_tap_paytype2" NumberOfTapsRequired="2" CommandParameter="{Binding ResourceId}"/>
+                                                            <!--TapGestureRecognizer Command="{Binding  Path=BindingContext.selected_paytype2Command, Source={x:Reference lv_TimesheetTable}}" CommandParameter="{Binding ResourceId}"/-->
+                                                        </StackLayout.GestureRecognizers>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+
+                                                    <!--#region Column 7-->
+                                                    <StackLayout Grid.Column="6" Grid.Row="0"  Margin="0 0 0 -5" Padding="7 0 0 0" BackgroundColor="{StaticResource GrayColor}">
+                                                        <Picker x:Name="pk_PayType3" Title="Double" WidthRequest="70" FontAttributes="Bold" HorizontalOptions="Center" FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource StatsCaptionFontSize}" TitleColor="Black" SelectedItem="{Binding Section3,Mode=TwoWay}"  ItemDisplayBinding="{Binding DescriptionCode}" ItemsSource="{Binding Path=BindingContext.PayTypes3, Source={x:Reference lv_TimesheetTable } }" />
+                                                        <Image Margin="80,-30,0,30" BackgroundColor="Transparent" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_downArrow.png'}">
+                                                            <Image.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="Arrow_OnTapped_pk3" />
+                                                            </Image.GestureRecognizers>
+                                                        </Image>
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="6" Grid.Row="1" Margin="-5 0 0 -5" Padding="15 0 0 0" BackgroundColor="{Binding paytype3Color}">
+                                                        <Entry  x:Name="pk_paytypeEntry3"  IsEnabled="{Binding paytype3Enabled}" Keyboard="Numeric" HorizontalTextAlignment="Center" TextColor="Black" Text="{Binding Paytype3Text,StringFormat='{0:F2}'}" ClearButtonVisibility="WhileEditing" />
+                                                        <Label Text="Min=0,Max=24" TextColor="Red" IsVisible="{Binding IsPaytype3Valid}"/>
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="selected_tap_paytype3" NumberOfTapsRequired="2" CommandParameter="{Binding ResourceId}"/>
+                                                            <!--TapGestureRecognizer Command="{Binding  Path=BindingContext.selected_paytype3Command, Source={x:Reference lv_TimesheetTable}}" CommandParameter="{Binding ResourceId}"/-->
+                                                        </StackLayout.GestureRecognizers>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+
+                                                    <!--#region Column 8-->
+                                                    <StackLayout Grid.Column="7" Grid.Row="0"  Margin="0 0 0 -5" Padding="7 0 0 0" BackgroundColor="{StaticResource GrayColor}">
+                                                        <Label Text="Per Diem ($)" FontAttributes="Bold" TextColor="Black" Padding="0,15" VerticalOptions="Center" HorizontalTextAlignment="Center" FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource StatsCaptionFontSize}" />
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="7" Grid.Row="1" Margin="-5 0 0 -5" Padding="15 0 0 0" BackgroundColor="{Binding perDimColor}">
+                                                        <Entry Keyboard="Numeric" x:Name="perdimentry" IsEnabled="{Binding perdimEnabled}" HorizontalTextAlignment="Center"  TextColor="Black" Text="{Binding PerDimText}" />
+                                                        <Label Text="Min=0,Max=500" TextColor="Red" IsVisible="{Binding IsPerDimValid}"/>
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="selected_tap_PerDim" NumberOfTapsRequired="2" CommandParameter="{Binding ResourceId}"/>
+                                                            <!--TapGestureRecognizer Command="{Binding  Path=BindingContext.selected_perDimCommand, Source={x:Reference lv_TimesheetTable}}" CommandParameter="{Binding ResourceId}"/-->
+                                                        </StackLayout.GestureRecognizers>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+
+                                                    <!--#region Column 9-->
+                                                    <StackLayout Grid.Column="8" Grid.Row="0"  Margin="0 0 0 -5" Padding="7 0 0 0" BackgroundColor="{StaticResource GrayColor}">
+                                                        <Label Text="Misc. ($)"
+                                                                   TextColor="Black"
+                                                               Padding="0,15"
+                                                               FontAttributes="Bold"
+                                                               VerticalOptions="Center"
+                                                               HorizontalTextAlignment="Center"
+                                                               FontFamily="{StaticResource RegularFontFamily}"
+                                                             FontSize="{StaticResource StatsCaptionFontSize}"></Label>
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="8" Grid.Row="1" Margin="-5 0 0 -5" Padding="15 0 0 0" BackgroundColor="{Binding miscColor}">
+                                                        <Entry Keyboard="Numeric" x:Name="miscentry" IsEnabled="{Binding miscEnabled}" HorizontalTextAlignment="Center" TextColor="Black" Text="{Binding MiscText}"/>
+                                                        <Label Text="Min=0,Max=9999.99" TextColor="Red" IsVisible="{Binding IsMiscValid}"/>
+                                                        <StackLayout.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="selected_tap_misc" NumberOfTapsRequired="2" CommandParameter="{Binding ResourceId}"/>
+                                                            <!--TapGestureRecognizer Command="{Binding  Path=BindingContext.selected_miscCommand, Source={x:Reference lv_TimesheetTable}}" CommandParameter="{Binding ResourceId}"/-->
+                                                        </StackLayout.GestureRecognizers>
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+
+                                                    <!--#region col 10-->
+                                                    <StackLayout Grid.Column="9" Grid.Row="0"  Margin="0 0 0 -5" Padding="7 0 0 0"  BackgroundColor="{StaticResource GrayColor}" >
+                                                        <Label Text="Description  (Misc.)"
+                                                               Padding="0,15"
+                                                               TextColor="Black"
+                                                               FontAttributes="Bold"
+                                                               VerticalOptions="Center"
+                                                               HorizontalTextAlignment="Center"
+                                                               FontFamily="{StaticResource RegularFontFamily}"
+                                                             FontSize="{StaticResource StatsCaptionFontSize}"></Label>
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="9" Grid.Row="1" Margin="-5 0 0 -5" Padding="15 0 0 0" BackgroundColor="White">
+                                                        <Button x:Name="btn_description" HeightRequest="33" BorderWidth="1" BorderColor="LightGray" Text="{Binding SelectedDesctiption}" BackgroundColor="Transparent" Clicked="lb_Description_Clicked" />
+                                                    </StackLayout>
+                                                    <!--#endregion-->
+                                                    <Grid.Triggers>
+                                                        <DataTrigger TargetType="Grid" Binding="{Binding Type}" Value="Employees">
+                                                            <Setter Property="IsVisible" Value="True"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger TargetType="Grid" Binding="{Binding Type}" Value="Equipment">
+                                                            <Setter Property="IsVisible" Value="False"/>
+                                                        </DataTrigger>
+                                                    </Grid.Triggers>
+                                                </Grid>
+                                                <!--StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="screen_double_tap"
+                                                            NumberOfTapsRequired="2"/>
+                                                </-->
+                                            </StackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                
+                            </ListView>
+                            
+                        </StackLayout>
+                        
+                    </ScrollView>
+                    <!--#endregion-->
+                    <!--#region Adding new Employees/Equipment-->
+                    <StackLayout Grid.Row="0" VerticalOptions="End" Margin="-30,0,10,20" HorizontalOptions="EndAndExpand" >
+                        <Grid WidthRequest="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5"/>
+                                <RowDefinition Height="0.5"/>
+                                <RowDefinition Height="0.5"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5*"/>
+                                <!--<ColumnDefinition Width="2*"/>-->
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                        <StackLayout  x:Name="empEqpButton" IsVisible="False">
+                            <StackLayout Grid.Row="0" Margin="0,0,0,5">
+                                <!--<Button x:Name="btn_empPopup" Grid.Column="0" Text="Employees" BackgroundColor="White"   Margin="0,0,40,0"  WidthRequest="60"  HeightRequest="35" CornerRadius="10"  FontFamily="{StaticResource RegularFontFamily}" FontSize="Small"  Clicked="Button_Clicked_ResourceEmp"/>-->
+                                <ImageButton BackgroundColor="Transparent" CornerRadius="20" Padding="5"   Grid.Column="0" WidthRequest="60" HeightRequest="60"  Clicked="Button_Clicked_ResourceEmp"   Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_blckEmpIcon.png'}" />
+                            </StackLayout>
+
+                            <StackLayout Grid.Row="1">
+                                <!--<Button  x:Name="btn_eupPopup" Grid.Column="0" Text="Equipment" BackgroundColor="White"   Margin="0,0 ,40,0" WidthRequest="50" HeightRequest="35"  CornerRadius="10" FontFamily="{StaticResource RegularFontFamily}" FontSize="Small" Clicked="Button_Clicked_ResourceEquip" />-->
+                                <ImageButton BackgroundColor="Transparent" CornerRadius="20" Padding="5"  Grid.Column="0"  WidthRequest="60" HeightRequest="60"  Clicked="Button_Clicked_ResourceEquip"   Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_BlckEqpIcon.png'}" />
+                            </StackLayout>
+                        </StackLayout>
+
+                        <StackLayout Grid.Row="2" Grid.ColumnSpan="2">
+                            <ImageButton x:Name="ic_addEmp"  BackgroundColor="Transparent" CornerRadius="20" Clicked="ic_addEmp_Clicked" VerticalOptions="End" HorizontalOptions="EndAndExpand" Margin="0 10 10 0" WidthRequest="50" HeightRequest="50" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.AddEmployees.png'}" />
+                        </StackLayout>
+                    </StackLayout>
+
+                    <!--#endregion-->
+                    <!--#region Employee Pop up-->
+
+                    <AbsoluteLayout BackgroundColor="White" IsVisible="false" Margin="20,50,20,50"  x:Name="listheaderEmp">
+
+                        <Grid AbsoluteLayout.LayoutBounds="0,0,1,0.2" AbsoluteLayout.LayoutFlags="SizeProportional" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.2*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Text="Add Employees" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Start" TextColor="{StaticResource DarkGreenColor}" FontSize="{StaticResource TitleFontSize}" FontFamily="{StaticResource RegularFontFamily}" FontAttributes="Bold" Margin="20,10,0,0 " />
+                            <Button  Grid.Column="1" Grid.Row="0" FontSize="{StaticResource TitleFontSize}" FontFamily="{StaticResource RegularFontFamily}" BackgroundColor="Transparent" TextColor="Black" Clicked="Button_Clicked" ImageSource="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_close.png'}"/>
+                            <Frame Padding="0"  OutlineColor="DarkGray" HasShadow="False" IsClippedToBounds="True" HorizontalOptions="FillAndExpand"  VerticalOptions="Center" Grid.ColumnSpan="2" Grid.Row="1" CornerRadius="20" BindingContext="{Binding Employees}" HeightRequest="80" Margin="10,5,10,0">
+                                <SearchBar x:Name="searchBar"  PlaceholderColor="LightGray" TextColor="#000000" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Text="{Binding Path=BindingContext.FilterText, Source={x:Reference lv_resourcePopUp } }" Placeholder="{extensions:Translate SearchWithThreeDot}"/>
+                            </Frame>
+                        </Grid>
+                        <ListView  x:Name="lv_resourcePopUp" Margin="10" AbsoluteLayout.LayoutBounds="0,0.7,1,0.7"  AbsoluteLayout.LayoutFlags="All" HasUnevenRows="True" SeparatorVisibility="Default" ItemsSource="{Binding Employees}" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Frame HasShadow="true"  Margin="5">
+                                            <StackLayout Orientation="Horizontal" Margin="-15">
+                                                <Grid HorizontalOptions="FillAndExpand">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="6.5*" />
+                                                        <ColumnDefinition Width="2.5*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions  >
+                                                        <RowDefinition Height="0.5*" />
+                                                    </Grid.RowDefinitions>
+                                                    <StackLayout Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center">
+                                                        <Image Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_EmpIcon.png'}" WidthRequest="30" Grid.Column="0"/>
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center">
+                                                        <StackLayout>
+                                                            <Label  Text="{Binding FullName}" FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource StatsCaptionFontSize}" HorizontalOptions="StartAndExpand" TextColor="{StaticResource TextColor}" VerticalOptions="CenterAndExpand" />
+                                                        </StackLayout>
+                                                        <StackLayout>
+                                                            <Label Text="{Binding RefPlusClass }" FontFamily="{StaticResource RegularFontFamily}" FontSize="{StaticResource ButtonFontSize}" HorizontalOptions="FillAndExpand" TextColor="{StaticResource LightTextColor}" VerticalOptions="CenterAndExpand"/>
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                    <StackLayout  Grid.Column="2"  VerticalOptions="Center" HorizontalOptions="End" >
+                                                        <CheckBox x:Name="chk_reservedResources" BindingContext="{Binding .}"  IsChecked="{Binding IsChecked}" CheckedChanged="chk_CheckedChanged"/>
+                                                    </StackLayout>
+                                                </Grid>
+                                            </StackLayout>
+                                        </Frame>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Image x:Name="bg_reservationEmp" IsVisible="false" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.bg_timesheetEmp.png'}" AbsoluteLayout.LayoutBounds="0.5,0.5,0.7,0.7" AbsoluteLayout.LayoutFlags="All"  HorizontalOptions="Center" />
+                        <Button Text="Done" BackgroundColor="{StaticResource DarkGreenColor}" AbsoluteLayout.LayoutBounds="0,1,1,0.1" AbsoluteLayout.LayoutFlags="All"  Clicked="Button_Clicked"  TextColor="White"/>
+                    </AbsoluteLayout>
+                    <!--#endregion-->
+                    <!--#region Equipment Pop up-->
+                    <AbsoluteLayout BackgroundColor="White" IsVisible="false" Margin="20,50,20,50" x:Name="listheader">
+                        <Grid AbsoluteLayout.LayoutBounds="0,0,1,0.2" AbsoluteLayout.LayoutFlags="SizeProportional" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.2*"/>
+                            </Grid.RowDefinitions>
+                            <Label x:Name="lb_headerLabel" Text="Add Equipment"  Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Start" TextColor="{StaticResource DarkGreenColor}" FontSize="{StaticResource TitleFontSize}" FontFamily="{StaticResource RegularFontFamily}" FontAttributes="Bold" Margin="20,10,0,0 "  />
+
+                            <Button  ImageSource="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_close.png'}" Grid.Column="1" Grid.Row="0" FontSize="{StaticResource TitleFontSize}" FontFamily="{StaticResource RegularFontFamily}" BackgroundColor="Transparent" TextColor="Black" Clicked="Button_Clicked_closeEqupPopup" />
+                            <Frame Padding="0"  OutlineColor="DarkGray" IsClippedToBounds="True" HasShadow="False"  HorizontalOptions="FillAndExpand"  VerticalOptions="Center" Grid.ColumnSpan="2" Grid.Row="1" CornerRadius="20" BindingContext="{Binding Equipments}" HeightRequest="80" Margin="10,5,10,0">
+                                <SearchBar x:Name="searchBarEqp"  PlaceholderColor="LightGray" TextColor="#000000" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Text="{Binding Path=BindingContext.FilterText, Source={x:Reference lv_EquipmentPopUp } }" Placeholder="{extensions:Translate SearchWithThreeDot}"/>
+                            </Frame>
+                        </Grid>
+                        <ListView  x:Name="lv_EquipmentPopUp" AbsoluteLayout.LayoutBounds="0,0.7,1,0.7"  AbsoluteLayout.LayoutFlags="All" Margin="10" BackgroundColor="White"  HasUnevenRows="True" SeparatorVisibility="Default" ItemsSource="{Binding Equipment}" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Orientation="Horizontal"  >
+                                            <Grid HorizontalOptions="FillAndExpand">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="8*" />
+                                                    <ColumnDefinition Width="2*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="0.5*" />
+                                                </Grid.RowDefinitions>
+                                                <StackLayout Grid.Column="0" HorizontalOptions="Start"  Margin="15" VerticalOptions="Center">
+                                                    <Label
+                                                        FontFamily="{StaticResource RegularFontFamily}"
+                                                        FontSize="{StaticResource StatsCaptionFontSize}"
+                                                        HorizontalOptions="StartAndExpand"
+                                                        Text="{Binding ResourceNumber}"
+                                                        TextColor="{StaticResource TextColor}"
+                                                        VerticalOptions="CenterAndExpand" />
+                                                    <Label
+                                                    FontFamily="{StaticResource RegularFontFamily}"
+                                                    FontSize="{StaticResource ButtonFontSize}"
+                                                    Text="{Binding Name}"
+                                                    TextColor="{StaticResource LightTextColor}"
+                                                     />
+
+                                                </StackLayout>
+                                                <StackLayout  Grid.Column="1"  Margin="0 10 0 0" VerticalOptions="Center" HorizontalOptions="End" >
+                                                    <CheckBox x:Name="chkEqup" BindingContext="{Binding .}" IsChecked="{Binding IsChecked}" CheckedChanged="chkEqup_CheckedChanged_Equipment"/>
+                                                </StackLayout>
+                                            </Grid>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Image x:Name="bg_reservationEqp"  IsVisible="false" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.bg_timesheetEqp.png'}"  AbsoluteLayout.LayoutBounds="0.5,0.5,0.7,0.7" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="Center"  />
+                        <Button Text="Done" BackgroundColor="{StaticResource DarkGreenColor}" AbsoluteLayout.LayoutBounds="0,1,1,0.1" AbsoluteLayout.LayoutFlags="All"   Clicked="Button_Clicked_closeEqupPopup"  TextColor="White"/>
+                    </AbsoluteLayout>
+                    <!--#endregion-->
+                    <!--#region Description Pop up-->
+                    <ListView  x:Name="lv_descriptionPopUp" BackgroundColor="White" Margin="20,50,20,50" IsVisible="False" Header="Description" AbsoluteLayout.LayoutBounds="1,1,.25,.25"  AbsoluteLayout.LayoutFlags="WidthProportional" HasUnevenRows="True" SeparatorVisibility="Default" ItemsSource="{Binding Path=BindingContext.ExpenseTypes, Source={x:Reference lv_TimesheetTable } }" ItemTapped="lv_descriptionPopUp_ItemTapped">
+                        <ListView.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="8*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.2*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label x:Name="lb_headerLabel" Text="Description" Grid.Column="0"  HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Start" TextColor="{StaticResource DarkGreenColor}" FontSize="{StaticResource TitleFontSize}" FontFamily="{StaticResource RegularFontFamily}" FontAttributes="Bold" Margin="10,10,10,-10" />
+                                    <Button  ImageSource="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_close.png'}" Grid.Column="1" FontSize="{StaticResource TitleFontSize}" FontFamily="{StaticResource RegularFontFamily}" BackgroundColor="Transparent" TextColor="Black" Clicked="Button_Clicked_lb_headerLabel" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.HeaderTemplate>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Frame HasShadow="true"  Margin="5">
+                                        <StackLayout Orientation="Horizontal" Margin="-10" >
+                                            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Center" >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1.5*" />
+                                                    <ColumnDefinition Width="7.5*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions  >
+                                                    <RowDefinition Height="0.5*" />
+                                                </Grid.RowDefinitions>
+
+                                                <StackLayout
+                                                    Grid.Column="0"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Fill">
+                                                    <Grid HorizontalOptions="Start"  IsVisible="True" VerticalOptions="CenterAndExpand">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="1*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Image>
+                                                            <Image.Triggers>
+                                                                <DataTrigger TargetType="Image" Binding="{Binding Name}" Value="AUTO">
+                                                                    <Setter Property="Source" Value="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_auto.png'}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Image" Binding="{Binding Name}" Value="MISC REI">
+                                                                    <Setter Property="Source" Value="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_per_diem.png'}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Image" Binding="{Binding Name}" Value="PAYRLTAX">
+                                                                    <Setter Property="Source" Value="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_payrl_tax.png'}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Image" Binding="{Binding Name}" Value="PERDIEM">
+                                                                    <Setter Property="Source" Value="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_per_diem.png'}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Image" Binding="{Binding Name}" Value="PHONE">
+                                                                    <Setter Property="Source" Value="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_phone.png'}" />
+                                                                </DataTrigger>
+                                                            </Image.Triggers>
+
+                                                        </Image>
+
+                                                    </Grid>
+                                                </StackLayout>
+
+                                                <StackLayout  Grid.Column="1" Margin="5,0,0,0">
+                                                    <StackLayout>
+                                                        <Label
+                                                    FontFamily="{StaticResource RegularFontFamily}"
+                                                    FontSize="{StaticResource StatsCaptionFontSize}"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Text="{Binding Name}"
+                                                    TextColor="{StaticResource TextColor}"
+                                                    VerticalOptions="CenterAndExpand" />
+                                                    </StackLayout>
+
+                                                    <StackLayout>
+                                                        <Label
+                                                    FontFamily="{StaticResource RegularFontFamily}"
+                                                    FontSize="{StaticResource ButtonFontSize}"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Text="{Binding Description}"
+                                                    TextColor="{StaticResource LightTextColor}"
+                                                    VerticalOptions="CenterAndExpand" />
+                                                    </StackLayout>
+                                                </StackLayout>
+
+
+                                            </Grid>
+
+                                        </StackLayout>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
+                    <!--#endregion-->
+                    <StackLayout Orientation="Vertical" BackgroundColor="Gray" IsVisible="false" Opacity="0.5" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"  x:Name="Entertime">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Entertime_tapped"/>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                    <Frame HasShadow="False" CornerRadius="10" BackgroundColor="White" IsVisible="false" Margin="50,50,50,350" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"  x:Name="Entertime1">
+                        <StackLayout>
+                            <Label Text="Enter Time" FontSize="{StaticResource StatsCaptionFontSize}" Margin="10" TextColor="Black" />
+                            <Entry Placeholder="time" Text="{Binding selected_time}" Keyboard="Numeric"  Margin="10"/>
+                            <Button Text="Done" HorizontalOptions="EndAndExpand" CornerRadius="10" Clicked="Time_selected"/>
+                        </StackLayout>
+                    </Frame>
+                </Grid>
+            </AbsoluteLayout>
+            <!--#endregion-->
+            
+        </StackLayout>
+    </ContentPage.Content>
+    <ContentPage.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="Appearing">
+            <behaviors:ActionCollection>
+                <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+            </behaviors:ActionCollection>
+        </behaviors:EventHandlerBehavior>
+    </ContentPage.Behaviors>
+</ContentPage>

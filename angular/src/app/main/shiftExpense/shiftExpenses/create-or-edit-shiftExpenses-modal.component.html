@@ -1,0 +1,66 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #shiftExpensesForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="shiftExpenses.id">{{l("EditShiftExpenses")}}</span>
+                        <span *ngIf="!shiftExpenses.id">{{l("CreateNewShiftExpenses")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="ShiftResourcesName">{{l("ShiftResources")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ShiftResourcesName" name="shiftResourcesName" [(ngModel)]="shiftResourcesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectShiftResourcesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setShiftResourcesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="shiftExpenses.shiftResourcesId" [(ngModel)]="shiftExpenses.shiftResourcesId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="ExpenseTypesName">{{l("ExpenseTypes")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ExpenseTypesName" name="expenseTypesName" [(ngModel)]="expenseTypesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectExpenseTypesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setExpenseTypesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="shiftExpenses.expenseTypesId" [(ngModel)]="shiftExpenses.expenseTypesId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="ShiftExpenses_Name">{{l("Name")}}</label>
+									<input type="text" id="ShiftExpenses_Name" class="form-control" [(ngModel)]="shiftExpenses.name" name="Name"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="ShiftExpenses_Amount">{{l("Amount")}}</label>
+									<input type="number" id="ShiftExpenses_Amount" class="form-control" [(ngModel)]="shiftExpenses.amount" name="Amount"  />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!shiftExpensesForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<shiftExpensesShiftResourcesLookupTableModal #shiftExpensesShiftResourcesLookupTableModal (modalSave)="getNewShiftResourcesId()"></shiftExpensesShiftResourcesLookupTableModal>
+		 <shiftExpensesExpenseTypesLookupTableModal #shiftExpensesExpenseTypesLookupTableModal (modalSave)="getNewExpenseTypesId()"></shiftExpensesExpenseTypesLookupTableModal>
+		 
+</div>

@@ -1,0 +1,129 @@
+<div [@routerTransition]>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title">
+                        <span>{{l("View All Submission")}}</span>
+                    </h3>
+
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+                    <form class="kt-form" autocomplete="off">
+                        <div>
+                            <div class="col-md-12">
+                                <div class="kt-separator kt-separator--border-dashed"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="CodeDropdown">{{l("Payroll Week")}}</label>
+                                        <select name="Code" class="form-control" required [(ngModel)]="selectedPayWeek">
+                                            <option value="">{{"Select code" }}</option>
+                                            <option *ngFor="let result of payPerionds" [value]="result.payPeriods.id">
+                                                {{formateDate(result.payPeriods)}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="CodeDropdown">{{l("Code")}}</label>
+                                        <input list="browsers" class="form-control" name="browser" id="browser" [(ngModel)]="selectedCode" required>
+                                        <datalist id="browsers" name="Code" class="form-control" required  style="display:none">
+                                            <option value="">{{"Select code" }}</option>
+                                            <option *ngFor="let result of codeNames" [value]="result.jobs.code">
+                                                {{result.jobs.code}}
+                                            </option>
+                                        </datalist>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="CodeDropdown">{{l("Action")}}</label>
+                                        <button [disabled]="isDisabled()"  class="btn btn-sm btn-primary btn-block" 
+                                            (click)="viewAllsubmission()">
+                                            {{l("Run Timetables")}}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="CodeDropdown">{{l("Action")}}</label>
+                                        <button [disabled]="isDisabled()"  class="btn btn-sm btn-primary btn-block" 
+                                            (click)="viewAllsubmissionEquipment()">
+                                            {{l("Run EquipTimetables")}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </form>
+
+                    <div class="row align-items-center">
+                        <!--<Primeng-Datatable-Start>-->
+                        <div class="primeng-datatable-container col-4" [busyIf]="primengTableHelper.isLoading">
+                            <p-table #dataTable (onLazyLoad)="getJobses($event)" [value]="primengTableHelper.records"
+                                rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false"
+                                [lazy]="true" [scrollable]="true" ScrollWidth="100%"
+                                [responsive]="primengTableHelper.isResponsive"
+                                [resizableColumns]="primengTableHelper.resizableColumns">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 150px" pSortableColumn="code">
+                                            {{l('Job Code')}}
+                                            <p-sortIcon field="jobs.code"></p-sortIcon>
+                                        </th>
+                                        <th style="width: 150px" pSortableColumn="name">
+                                            {{l('Job Name')}}
+                                            <p-sortIcon field="jobs.name"></p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-record="$implicit">
+                                    <tr>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title"> {{l('Code')}}</span>
+                                            {{record.jobs.code}}
+                                        </td>
+                                        <td style="width:150px">
+                                            <span class="ui-column-title"> {{l('Name')}}</span>
+                                            {{record.jobs.name}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                                {{l('NoData')}}
+                            </div>
+                            <div class="primeng-paging-container">
+                                <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage" #paginator
+                                    (onPageChange)="getJobses($event)"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                                </p-paginator>
+                                <span class="total-records-count">
+                                    {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                                </span>
+                            </div>
+                        </div>
+                        <!--<Primeng-Datatable-End>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <createOrEditJobsModal #createOrEditJobsModal (modalSave)="getJobses()"></createOrEditJobsModal>
+        <viewJobsModal #viewJobsModal></viewJobsModal>
+            <entityTypeHistoryModal #entityTypeHistoryModal></entityTypeHistoryModal>
+    </div>
+</div>

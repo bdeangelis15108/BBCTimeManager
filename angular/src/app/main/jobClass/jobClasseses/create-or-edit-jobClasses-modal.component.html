@@ -1,0 +1,38 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #jobClassesForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="jobClasses.id">{{l("EditJobClasses")}}</span>
+                        <span *ngIf="!jobClasses.id">{{l("CreateNewJobClasses")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="JobClasses_Code">{{l("Code")}}</label>
+									<input type="text" id="JobClasses_Code" class="form-control" [(ngModel)]="jobClasses.code" name="Code"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="JobClasses_Name">{{l("Name")}}</label>
+									<input type="text" id="JobClasses_Name" class="form-control" [(ngModel)]="jobClasses.name" name="Name"   minlength="1"  maxlength="50" />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!jobClassesForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

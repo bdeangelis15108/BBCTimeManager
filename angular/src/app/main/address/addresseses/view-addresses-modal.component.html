@@ -1,0 +1,54 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Linne1")}} :</h6>
+                        {{ item.addresses.linne1 }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Line2")}} :</h6>
+                        {{ item.addresses.line2 }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("City")}} :</h6>
+                        {{ item.addresses.city }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("State")}} :</h6>
+                        {{ item.addresses.state }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Zip")}} :</h6>
+                        {{ item.addresses.zip }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Lan")}} :</h6>
+                        {{ item.addresses.lan }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("Lat")}} :</h6>
+                        {{ item.addresses.lat }}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

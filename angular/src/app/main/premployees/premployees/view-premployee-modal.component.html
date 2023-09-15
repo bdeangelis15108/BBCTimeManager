@@ -1,0 +1,66 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{l("Details")}}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <h6>{{l("EMPNUM")}} :</h6>
+                        {{ item.premployee.empnum }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("NAME")}} :</h6>
+                        {{ item.premployee.name }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("UNIONNUM")}} :</h6>
+                        {{ item.premployee.unionnum }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("UNIONLOCAL")}} :</h6>
+                        {{ item.premployee.unionlocal }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("CLASS")}} :</h6>
+                        {{ item.premployee.class }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("WCOMPNUM1")}} :</h6>
+                        {{ item.premployee.wcompnuM1 }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("LASTNAME")}} :</h6>
+                        {{ item.premployee.lastname }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("FIRSTNAME")}} :</h6>
+                        {{ item.premployee.firstname }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("STATUS")}} :</h6>
+                        {{ item.premployee.status }}
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h6>{{l("PAYRATE")}} :</h6>
+                        {{ item.premployee.payrate }}
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="saving" type="button" class="btn btn-primary blue" (click)="close()">{{l("Close")}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>

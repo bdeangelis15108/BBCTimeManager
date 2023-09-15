@@ -1,0 +1,66 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #resourceWorkerInfosForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="resourceWorkerInfos.id">{{l("EditResourceWorkerInfos")}}</span>
+                        <span *ngIf="!resourceWorkerInfos.id">{{l("CreateNewResourceWorkerInfos")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="WorkerClaseesName">{{l("WorkerClasees")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="WorkerClaseesName" name="workerClaseesName" [(ngModel)]="workerClaseesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectWorkerClaseesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setWorkerClaseesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="resourceWorkerInfos.workerClaseesId" [(ngModel)]="resourceWorkerInfos.workerClaseesId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="ResourcesName">{{l("Resources")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ResourcesName" name="resourcesName" [(ngModel)]="resourcesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectResourcesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setResourcesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="resourceWorkerInfos.resourcesId" [(ngModel)]="resourceWorkerInfos.resourcesId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="ResourceWorkerInfos_FirstName">{{l("FirstName")}}</label>
+									<input type="text" id="ResourceWorkerInfos_FirstName" class="form-control" [(ngModel)]="resourceWorkerInfos.firstName" name="FirstName"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="ResourceWorkerInfos_LastName">{{l("LastName")}}</label>
+									<input type="text" id="ResourceWorkerInfos_LastName" class="form-control" [(ngModel)]="resourceWorkerInfos.lastName" name="LastName"   minlength="1"  maxlength="50" />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!resourceWorkerInfosForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<resourceWorkerInfosWorkerClaseesLookupTableModal #resourceWorkerInfosWorkerClaseesLookupTableModal (modalSave)="getNewWorkerClaseesId()"></resourceWorkerInfosWorkerClaseesLookupTableModal>
+		 <resourceWorkerInfosResourcesLookupTableModal #resourceWorkerInfosResourcesLookupTableModal (modalSave)="getNewResourcesId()"></resourceWorkerInfosResourcesLookupTableModal>
+		 
+</div>

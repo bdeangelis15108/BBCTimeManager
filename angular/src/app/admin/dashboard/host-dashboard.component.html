@@ -1,0 +1,49 @@
+<!-- <customizable-dashboard [dashboardName]="dashboardName"></customizable-dashboard> -->
+
+<div [@routerTransition]>
+    <div style="margin-top: 50px;">
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body">
+                    <form class="kt-form" autocomplete="off">
+                        <div>
+
+                            <h1>Load Payroll Period</h1>
+                            <p>The new payroll period will be loaded.<p>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <button class="btn btn-sm btn-primary" (click)="LoadNewPayPeriod()">
+                                            {{l("Load New Period")}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <h1>CE Data Refresh</h1>
+                            <p>The existing payroll period will be updated with changes and additions.<p>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <button class="btn btn-sm btn-primary" (click)="CeDataRefresh()">
+                                            {{l("Data Refresh")}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

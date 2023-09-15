@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:Nucleus.ViewModels.Base;assembly=Nucleus.Mobile.Shared"
+             xmlns:extensions="clr-namespace:Nucleus.Extensions.MarkupExtensions;assembly=Nucleus.Mobile.Shared"
+             x:Class="Nucleus.Views.MySettingsView"
+             base:ViewManager.AutoWireViewModel="true"
+             Title="{extensions:Translate MySettings}">
+    <ContentPage.Content>
+
+        <Grid ColumnSpacing="10" 
+              BackgroundColor="{StaticResource MasterPageBackgroundColor}"
+              Margin="0,0,0,5"
+              Padding="5">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--<Image Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ChangeLanguage.png'}" 
+                   Grid.Column="0"
+                   Grid.Row="0" />
+            <Picker Title="{extensions:Translate Languages}" 
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    ItemsSource="{Binding Languages}" 
+                    ItemDisplayBinding="{Binding DisplayName}"
+                    SelectedItem="{Binding SelectedLanguage}"/>-->
+            <Image Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.Logout.png'}" 
+                   Grid.Column="0"
+                   Grid.Row="0" />
+            <Label Text="{extensions:Translate Logout}" HorizontalOptions="StartAndExpand" VerticalOptions="Center"
+                   Grid.Column="1"
+                   Grid.Row="0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding LogoutCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+            <!--<Image Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ChangePassword.png'}" 
+                   Grid.Column="0"
+                   Grid.Row="1" />
+            <Label Text="{extensions:Translate ChangePassword}" HorizontalOptions="StartAndExpand" VerticalOptions="Center"
+                   Grid.Column="1"
+                   Grid.Row="1">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ChangePasswordCommand}" />
+                </Label.GestureRecognizers>
+            </Label>-->
+
+            
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

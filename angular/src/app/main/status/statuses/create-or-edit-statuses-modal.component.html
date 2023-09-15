@@ -1,0 +1,61 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #statusesForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="statuses.id">{{l("EditStatuses")}}</span>
+                        <span *ngIf="!statuses.id">{{l("CreateNewStatuses")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="Statuses_Name">{{l("Name")}}</label>
+									<input type="text" id="Statuses_Name" class="form-control" [(ngModel)]="statuses.name" name="Name"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="Statuses_IsDefault" class="kt-checkbox">
+										<input id="Statuses_IsDefault" type="checkbox" name="IsDefault" [(ngModel)]="statuses.isDefault"> 
+										{{l("IsDefault")}}
+										<span></span>
+									</label>
+								</div>
+					
+								<div class="form-group">
+									<label for="Statuses_ForwardName">{{l("ForwardName")}}</label>
+									<input type="text" id="Statuses_ForwardName" class="form-control" [(ngModel)]="statuses.forwardName" name="ForwardName"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="Statuses_ReverseName">{{l("ReverseName")}}</label>
+									<input type="text" id="Statuses_ReverseName" class="form-control" [(ngModel)]="statuses.reverseName" name="ReverseName"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="Statuses_ForwardId">{{l("ForwardId")}}</label>
+									<input type="number" id="Statuses_ForwardId" class="form-control" [(ngModel)]="statuses.forwardId" name="ForwardId"  />
+								</div>
+					
+								<div class="form-group">
+									<label for="Statuses_ReverseId">{{l("ReverseId")}}</label>
+									<input type="number" id="Statuses_ReverseId" class="form-control" [(ngModel)]="statuses.reverseId" name="ReverseId"  />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!statusesForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,356 @@
+<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #timetablesForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="timetables.id">{{l("EditTimetables")}}</span>
+                        <span *ngIf="!timetables.id">{{l("CreateNewTimetables")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="form-group m-form__group">
+                        <label for="PayPeriodsName">{{l("PayPeriods")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="PayPeriodsName" name="payPeriodsName"
+                                [(ngModel)]="payPeriodsName" type="text" disabled>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timetables.periodDate" [(ngModel)]="timetables.periodDate"
+                        type="text" hidden>
+
+                    <div class="form-group m-form__group">
+                        <label for="ResourcesName">{{l("Employee Name")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ResourcesName" name="resourcesName"
+                                [(ngModel)]="resourcesName" type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectResourcesModal()"
+                                    type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button"
+                                    (click)="setResourcesCodeNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timetables.resourcesCode" [(ngModel)]="timetables.resourcesCode"
+                        type="text" hidden>
+
+                    <div class="form-group m-form__group">
+                        <label for="UnionPayRatesClass">{{l("UnionPayRates")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="UnionPayRatesClass" name="unionPayRatesClass"
+                                [(ngModel)]="unionPayRatesClass" type="text" disabled>
+                            <div class="input-group-append" [hidden]="cssForCreate">
+                                <button class="btn btn-primary blue" (click)="openSelectUnionPayRatesModal()"
+                                    type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend" [hidden]="cssForCreate">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setRateNull()"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timetables.rate" [(ngModel)]="timetables.rate" type="text" hidden>
+
+                    <div class="form-group m-form__group">
+                        <label for="UnionsNumber">{{l("Unions")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="UnionsNumber" name="unionsNumber" [(ngModel)]="unionsNumber"
+                                type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectUnionsModal()" type="button"><i
+                                        class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setUnionlocalNull()"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timetables.unionlocal" [(ngModel)]="timetables.unionlocal"
+                        type="text" hidden>
+
+                    <div class="form-group m-form__group">
+                        <label for="AddressesState">{{l("State")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="AddressesState" name="addressesState"
+                                [(ngModel)]="addressesState" type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectAddressesModal()"
+                                    type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setStateNull()"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timetables.state" [(ngModel)]="timetables.state" type="text"
+                        hidden>
+
+                    <div class="form-group m-form__group">
+                        <label for="ExpenseTypesDescription">{{l("ExpenseTypes")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ExpenseTypesDescription" name="expenseTypesDescription"
+                                [(ngModel)]="expenseTypesDescription" type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectExpenseTypesModal()"
+                                    type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setDescriptionNull()"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timetables.description" [(ngModel)]="timetables.description"
+                        type="text" hidden>
+
+                    <div class="form-group m-form__group">
+                        <label for="CostTypesName">{{l("CostTypes")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="CostTypesName" name="costTypesName"
+                                [(ngModel)]="costTypesName" type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectCostTypesModal()"
+                                    type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setCostTypesIdNull()"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timetables.costTypesId" [(ngModel)]="timetables.costTypesId"
+                        type="text" hidden>
+
+                    <div class="form-group m-form__group">
+                        <label for="AccountsName">{{l("Accounts")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="AccountsName" name="accountsName" [(ngModel)]="accountsName"
+                                type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectAccountsModal()"
+                                    type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setAccountsIdNull()"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timetables.accountsId" [(ngModel)]="timetables.accountsId"
+                        type="text" hidden>
+
+                    <div class="form-group m-form__group">
+                        <label for="UserName">{{l("User")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="UserName" name="userName" [(ngModel)]="userName" type="text"
+                                disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectUserModal()" type="button"><i
+                                        class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setCreatedByNull()"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timetables.createdBy" [(ngModel)]="timetables.createdBy"
+                        type="text" hidden>
+
+                    <div class="form-group m-form__group">
+                        <label for="PayTypesCode">{{l("PayTypes")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="PayTypesCode" name="payTypesCode" [(ngModel)]="payTypesCode"
+                                type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectPayTypesModal()"
+                                    type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setPayTypesIdNull()"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timetables.payTypesId" [(ngModel)]="timetables.payTypesId"
+                        type="text" hidden>
+
+                    <div class="form-group m-form__group">
+                        <label for="WorkerClaseesName">{{l("WorkerClasees")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="WorkerClaseesName" name="workerClaseesName"
+                                [(ngModel)]="workerClaseesName" type="text" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectWorkerClaseesModal()"
+                                    type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button"
+                                    (click)="setWorkerClaseesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="timetables.workerClaseesId"
+                        [(ngModel)]="timetables.workerClaseesId" type="text" hidden>
+
+                        <div class="form-group">
+                            <label for="Timetables_Multiplier">{{l("Multiplier")}}</label>
+                            <input type="number" #Timetables_Multiplier="ngModel" id="Timetables_Multiplier" class="form-control"
+                                [(ngModel)]="timetables.multiplier" name="Multiplier" disabled />
+                            <validation-messages [formCtrl]="Timetables_Multiplier"></validation-messages>
+                        </div>
+                    <div class="form-group">
+                        <label for="Timetables_Day1">{{l("Day1")}}</label>
+                        <input type="number" #Timetables_Day1="ngModel" id="Timetables_Day1" class="form-control"
+                            [(ngModel)]="timetables.day1" name="Day1" (change) = 'dayChange()' />
+                        <validation-messages [formCtrl]="Timetables_Day1"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Timetables_Day2">{{l("Day2")}}</label>
+                        <input type="number" #Timetables_Day2="ngModel" id="Timetables_Day2" class="form-control"
+                            [(ngModel)]="timetables.day2" name="Day2" />
+                        <validation-messages [formCtrl]="Timetables_Day2"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Timetables_Day3">{{l("Day3")}}</label>
+                        <input type="number" #Timetables_Day3="ngModel" id="Timetables_Day3" class="form-control"
+                            [(ngModel)]="timetables.day3" name="Day3" />
+                        <validation-messages [formCtrl]="Timetables_Day3"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Timetables_Day4">{{l("Day4")}}</label>
+                        <input type="number" #Timetables_Day4="ngModel" id="Timetables_Day4" class="form-control"
+                            [(ngModel)]="timetables.day4" name="Day4" />
+                        <validation-messages [formCtrl]="Timetables_Day4"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Timetables_Day5">{{l("Day5")}}</label>
+                        <input type="number" #Timetables_Day5="ngModel" id="Timetables_Day5" class="form-control"
+                            [(ngModel)]="timetables.day5" name="Day5" />
+                        <validation-messages [formCtrl]="Timetables_Day5"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Timetables_Day6">{{l("Day6")}}</label>
+                        <input type="number" #Timetables_Day6="ngModel" id="Timetables_Day6" class="form-control"
+                            [(ngModel)]="timetables.day6" name="Day6" />
+                        <validation-messages [formCtrl]="Timetables_Day6"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Timetables_Day7">{{l("Day7")}}</label>
+                        <input type="number" #Timetables_Day7="ngModel" id="Timetables_Day7" class="form-control"
+                            [(ngModel)]="timetables.day7" name="Day7" />
+                        <validation-messages [formCtrl]="Timetables_Day7"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Timetables_Amount">{{l("Amount")}}</label>
+                        <input type="number" #Timetables_Amount="ngModel" id="Timetables_Amount" class="form-control"
+                            [(ngModel)]="timetables.amount" name="Amount" disabled />
+                        <validation-messages [formCtrl]="Timetables_Amount"></validation-messages>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Timetables_CreatedOn">{{l("CreatedOn")}}</label>
+                        <input class="form-control m-input" #Timetables_CreatedOn type="datetime" bsDatepicker
+                            datePickerMomentModifier [(date)]="timetables.createdOn" id="Timetables_CreatedOn"
+                            name="Timetables_CreatedOn">
+                        <validation-messages [formCtrl]="Timetables_CreatedOn"></validation-messages>
+                    </div>
+
+                    <br />
+                    <!--<div class="m-checkbox-list">
+                        <label for="Timetables_IsActive" class="kt-checkbox">
+                            <input id="Timetables_IsActive" #Timetables_IsActive="ngModel" type="checkbox"
+                                name="IsActive" [(ngModel)]="timetables.isActive">
+                            {{l("IsActive")}}
+                            <span></span>
+                        </label>
+                        <validation-messages [formCtrl]="Timetables_IsActive"></validation-messages>
+                    </div>-->
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="job_Code">{{l("Job Code")}} *</label>
+                                <input type="text" #job_Code="ngModel" id="job_Code"
+                                    class="form-control" [(ngModel)]="job" name="job" minlength="1"
+                                    maxlength="150" disabled />
+                                <validation-messages [formCtrl]="job_Code"></validation-messages>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="phase_Code">{{l("Phase")}} *</label>
+                                <input type="text" #phase_Code="ngModel" id="phase_Code"
+                                    class="form-control" [(ngModel)]="phase" name="phase" minlength="1"
+                                    maxlength="150" required />
+                                <validation-messages [formCtrl]="phase_Code"></validation-messages>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Category_Code">{{l("Category")}} *</label>
+                                <input type="text" #Category_Code="ngModel" id="Category_Code"
+                                    class="form-control" [(ngModel)]="Category" name="Category" minlength="1"
+                                    maxlength="150" required />
+                                <validation-messages [formCtrl]="Category_Code"></validation-messages>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default"
+                        (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!timetablesForm.form.valid"
+                        [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i>
+                        <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <timetablesPayPeriodsLookupTableModal #timetablesPayPeriodsLookupTableModal (modalSave)="getNewPeriodDate()">
+    </timetablesPayPeriodsLookupTableModal>
+    <timetablesResourcesLookupTableModal #timetablesResourcesLookupTableModal (modalSave)="getNewResourcesCode()">
+    </timetablesResourcesLookupTableModal>
+    <timetablesUnionPayRatesLookupTableModal #timetablesUnionPayRatesLookupTableModal (modalSave)="getNewRate()">
+    </timetablesUnionPayRatesLookupTableModal>
+    <timetablesUnionsLookupTableModal #timetablesUnionsLookupTableModal (modalSave)="getNewUnionlocal()">
+    </timetablesUnionsLookupTableModal>
+    <timetablesAddressesLookupTableModal #timetablesAddressesLookupTableModal (modalSave)="getNewState()">
+    </timetablesAddressesLookupTableModal>
+    <timetablesExpenseTypesLookupTableModal #timetablesExpenseTypesLookupTableModal (modalSave)="getNewDescription()">
+    </timetablesExpenseTypesLookupTableModal>
+    <timetablesCostTypesLookupTableModal #timetablesCostTypesLookupTableModal (modalSave)="getNewCostTypesId()">
+    </timetablesCostTypesLookupTableModal>
+    <timetablesAccountsLookupTableModal #timetablesAccountsLookupTableModal (modalSave)="getNewAccountsId()">
+    </timetablesAccountsLookupTableModal>
+    <timetablesUserLookupTableModal #timetablesUserLookupTableModal (modalSave)="getNewCreatedBy()">
+    </timetablesUserLookupTableModal>
+    <timetablesPayTypesLookupTableModal #timetablesPayTypesLookupTableModal (modalSave)="getNewPayTypesId()">
+    </timetablesPayTypesLookupTableModal>
+    <timetablesWorkerClaseesLookupTableModal #timetablesWorkerClaseesLookupTableModal
+        (modalSave)="getNewWorkerClaseesId()"></timetablesWorkerClaseesLookupTableModal>
+
+</div>

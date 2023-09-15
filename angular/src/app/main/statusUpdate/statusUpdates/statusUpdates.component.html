@@ -1,0 +1,160 @@
+<div [@routerTransition]>
+  <div class="kt-content kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+  
+  
+                <div class="kt-subheader kt-grid__item">
+                  <div [class]="containerClass">
+                    <div class="kt-subheader__main">
+                        <h3 class="kt-subheader__title">
+                            <span>{{l("All Timesheet Submitted")}}</span>
+                        </h3>
+                        
+                    </div>
+                    <div class="kt-subheader__toolbar">
+                        <div class="kt-subheader__wrapper">
+            			
+                        <button (click)="viewAllSubmission()"class="btn btn-primary blue"><i class="fa fa-eye"></i> {{l("View all submission")}}</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            
+    
+    <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body">
+                <form class="kt-form" autocomplete="off">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="col-xl-12">
+                                <div class="form-group m-form__group align-items-center">
+                                    
+                                </div>
+                            </div>
+                        </div>
+						 <div class="row" [hidden]="!advancedFiltersAreShown">
+						 	<div class="col-md-12">
+						         <div class="kt-separator kt-separator--border-dashed"></div>
+						     </div>
+
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="UserNameFilter"> {{l("Site Superviors")}}</label>
+									<input type="text" class="form-control" id="UserNameFilter" name="userNameFilter" [(ngModel)]="userNameFilter">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <span class="clickable-item text-muted" *ngIf="!advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-down"></i> {{l("ShowAdvancedFilters")}}</span>
+                                <span class="clickable-item text-muted" *ngIf="advancedFiltersAreShown" (click)="advancedFiltersAreShown=!advancedFiltersAreShown"><i class="fa fa-angle-up"></i> {{l("HideAdvancedFilters")}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row align-items-center">
+                    <!--<Primeng-Datatable-Start>-->
+                    <div class="primeng-datatable-container col-12"
+                         [busyIf]="primengTableHelper.isLoading">
+                        <p-table #dataTable
+                                     (onLazyLoad)="getStatusUpdates($event)"
+                                     [value]="primengTableHelper.records"
+                                     rows="{{primengTableHelper.defaultRecordsCountPerPage}}"
+                                     [paginator]="false"
+                                     [lazy]="true"
+                                     [scrollable]="true"
+                                     ScrollWidth="100%"
+                                     [responsive]="primengTableHelper.isResponsive"
+                                     [resizableColumns]="primengTableHelper.resizableColumns">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width: 130px" [hidden]="!isGrantedAny('Pages.StatusUpdates.Edit', 'Pages.StatusUpdates.Delete')">{{l('Actions')}}</th>
+                                    <th style="width: 150px" pSortableColumn="actualCreateDateTime">
+                                        {{l('Payroll Date')}}
+                                        <p-sortIcon field="statusUpdates.actualCreateDateTime"></p-sortIcon>
+                                    </th>
+                                    <th style="width: 150px" pSortableColumn="modifiedOn">
+                                        {{l('Submitted Date')}}
+                                        <p-sortIcon field="statusUpdates.modifiedOn"></p-sortIcon>
+                                    </th>
+                                    
+                                    <th style="width: 150px" pSortableColumn="modifiedByFk.name">
+                                        {{l('Site Supervisor')}}
+                                        <p-sortIcon field="userName"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>                           
+							<ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+                                <tr>
+                                    <td style="width: 130px"
+                                        [hidden]="!isGrantedAny('Pages.StatusUpdates.Edit', 'Pages.StatusUpdates.Delete')">
+                                        <div class="btn-group dropdown" dropdown container="body">
+                                            <button class="dropdown-toggle btn btn-sm btn-primary" dropdownToggle>
+                                                <i class="fa fa-cog"></i><span class="caret"></span> {{l("Actions")}}
+                                            </button>
+                                            <ul class="dropdown-menu" *dropdownMenu>
+                                                <!--<li>
+                                                    <a href="javascript:;"
+                                                       (click)="viewStatusUpdatesModal.show(record)">{{l('View')}}</a>
+                                                </li>-->
+                                                <!--<li>
+                                                    <a href="javascript:;" *ngIf="permission.isGranted('Pages.StatusUpdates.Edit')"
+                                                       (click)="createOrEditStatusUpdatesModal.show(record.statusUpdates.id)">{{l('Edit')}}</a>
+                                                </li>-->
+                                                <li>
+                                                    <a href="javascript:;" *ngIf="permission.isGranted('Pages.StatusUpdates.Delete')"
+                                                       (click)="deleteStatusUpdates(record.statusUpdates)">{{l('Delete')}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('Payroll Date')}}</span>
+                                        <span *ngIf="record.statusUpdates.actualCreateDateTime">
+                                            {{record.statusUpdates.actualCreateDateTime | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.statusUpdates.actualCreateDateTime">-</span>
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('Sumitted Date')}}</span>
+                                        <span *ngIf="record.statusUpdates.modifiedOn">
+                                            {{record.statusUpdates.modifiedOn | momentFormat:'L'}}
+                                        </span>
+                                        <span *ngIf="!record.statusUpdates.modifiedOn">-</span>
+                                    </td>
+                                    <td style="width:150px">
+                                        <span class="ui-column-title"> {{l('Site Supervisor')}}</span>
+                                        {{record.userName}}
+                                    </td>                                   
+
+                                </tr>
+                               
+                            </ng-template>
+                        </p-table>
+						<div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                            {{l('NoData')}}
+                        </div>
+                        <div class="primeng-paging-container">
+                            <p-paginator [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                                         #paginator
+                                         (onPageChange)="getStatusUpdates($event)"
+                                         [totalRecords]="primengTableHelper.totalRecordsCount"
+                                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                            </p-paginator>
+                            <span class="total-records-count">
+                                {{l('TotalRecordsCount', primengTableHelper.totalRecordsCount)}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--<Primeng-Datatable-End>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <createOrEditStatusUpdatesModal #createOrEditStatusUpdatesModal (modalSave)="getStatusUpdates()"></createOrEditStatusUpdatesModal>    
+    <viewStatusUpdatesModal #viewStatusUpdatesModal></viewStatusUpdatesModal>
+    
+  </div>
+</div>

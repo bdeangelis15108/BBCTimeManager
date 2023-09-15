@@ -1,0 +1,66 @@
+{
+  "IsRegenerate": false,
+  "MenuPosition": "main",
+  "RelativeNamespace": "PRCLASSES",
+  "EntityName": "PRCLASS",
+  "EntityNamePlural": "PRCLASSs",
+  "TableName": "PRCLASSs",
+  "PrimaryKeyType": "int",
+  "BaseClass": "Entity",
+  "EntityHistory": true,
+  "AutoMigration": true,
+  "UpdateDatabase": true,
+  "CreateUserInterface": true,
+  "CreateViewOnly": true,
+  "CreateExcelExport": true,
+  "PagePermission": {
+    "Host": true,
+    "Tenant": true
+  },
+  "Properties": [
+    {
+      "Name": "NAME",
+      "Type": "string",
+      "MaxLength": 100,
+      "MinLength": 1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0,
+        "MaximumValue": 0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      }
+    }
+  ],
+  "NavigationProperties": [
+    {
+      "Namespace": "Nucleus.JCUNIONS",
+      "ForeignEntityName": "JCUNION",
+      "IdType": "int",
+      "IsNullable": false,
+      "PropertyName": "UNIONNUM",
+      "DisplayPropertyName": "UNIONNUM",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable"
+    },
+    {
+      "Namespace": "Nucleus.PREMPLOYEES",
+      "ForeignEntityName": "PREMPLOYEE",
+      "IdType": "int",
+      "IsNullable": true,
+      "PropertyName": "CLASS",
+      "DisplayPropertyName": "CLASS",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable"
+    }
+  ],
+  "EnumDefinitions": []
+}

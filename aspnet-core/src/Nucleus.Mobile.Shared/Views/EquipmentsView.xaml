@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:Nucleus.ViewModels.Base;assembly=Nucleus.Mobile.Shared"
+             x:Class="Nucleus.Views.EquipmentsView"
+             xmlns:extensions="clr-namespace:Nucleus.Extensions.MarkupExtensions;assembly=Nucleus.Mobile.Shared"
+             xmlns:viewModels="clr-namespace:Nucleus.ViewModels" xmlns:behaviors="clr-namespace:Nucleus.Behaviors" xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             base:ViewManager.AutoWireViewModel="true"
+             Title="{Binding Title}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="RESERVE" BindingContext="{Binding .}"
+                       Clicked="ToolbarItem_Clicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        
+        <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Image x:Name="bg_reservationEqp" IsVisible="false" WidthRequest="500" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0.5, 0.5, 0.5, 0.5" AbsoluteLayout.LayoutFlags="All"  Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.bg_reserveEqp.png'}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            <!--#region  Reserved Equipment-->
+            <ListView x:Name="lvEquipment" HasUnevenRows="True" SeparatorVisibility="None" IsVisible="True" ItemsSource="{Binding ReservedEquipment}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame HasShadow="true" Padding="15" Margin="5">
+                                <StackLayout Orientation="Horizontal" >
+                                    <Grid HorizontalOptions="FillAndExpand"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="6.5*" />
+                                            <ColumnDefinition Width="2.5*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions  >
+                                            <RowDefinition Height="0.5*" />
+                                        </Grid.RowDefinitions>
+                                        <StackLayout
+                                                    Grid.Column="0"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center">
+
+                                            <Image Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_EqpIcon.png'}" Grid.Column="0"/>
+                                        </StackLayout>
+                                        <StackLayout
+                                                    Grid.Column="1"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Center">
+                                            <StackLayout>
+                                                <Label
+                                                    FontFamily="{StaticResource RegularFontFamily}"
+                                                    FontSize="{StaticResource StatsCaptionFontSize}"
+                                                    Text="{Binding ResourceNumber}"
+                                                    TextColor="{StaticResource TextColor}"
+                                                     />
+                                            </StackLayout>
+
+                                            <StackLayout>
+                                                <Label
+                                                    FontFamily="{StaticResource RegularFontFamily}"
+                                                    FontSize="{StaticResource ButtonFontSize}"
+                                                    Text="{Binding Name}"
+                                                    TextColor="{StaticResource LightTextColor}"
+                                                     />
+                                            </StackLayout>
+                                        </StackLayout>
+
+                                        <StackLayout  Grid.Column="2" 
+                                                      VerticalOptions="Center" 
+                                                      HorizontalOptions="End" >
+
+                                            <ImageButton
+                                                Clicked="ImageButton_Clicked_1"
+                                                BindingContext="{Binding .}"
+                                                Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_remove.png'}" />
+                                        </StackLayout>
+                                    </Grid>
+
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--#endregion-->
+            <Label x:Name="labelBg"
+                   IsVisible="False"
+                   BackgroundColor="rgb(224, 224, 224)"
+                   AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                   AbsoluteLayout.LayoutFlags="All"
+                   Opacity="0.5"/>
+            <!--#region  All Equipment-->
+            <StackLayout BackgroundColor="White" IsVisible="false" AbsoluteLayout.LayoutBounds="0.5,0.5,0.8,0.7" AbsoluteLayout.LayoutFlags="All"  x:Name="listheader">
+                <Grid>
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.2*"/>
+                                <RowDefinition Height="0.2*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Text="Add Equipment"
+                                   Grid.Column="0" 
+                                   Grid.Row="0"
+                                      HorizontalTextAlignment="Center"
+                                       TextColor="{StaticResource DarkGreenColor}"
+                                       FontSize="{StaticResource TitleFontSize}"
+                                   FontFamily="{StaticResource RegularFontFamily}"
+                                   FontAttributes="Bold"
+                                   Margin="10"
+                                   />
+
+                            <Button  ImageSource="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_close.png'}"
+                                        Grid.Column="1"
+                                     Grid.Row="0"
+                                        FontSize="{StaticResource TitleFontSize}"
+                                     FontAttributes="Bold"
+                                     FontFamily="{StaticResource RegularFontFamily}"
+                                        BackgroundColor="Transparent"
+                                       TextColor="Black"
+                                        Clicked="Button_Clicked"/>
+                            <Frame Padding="0" 
+                                   OutlineColor="DarkGray" 
+                                   HasShadow="True" 
+                                   HorizontalOptions="FillAndExpand"  
+                                   VerticalOptions="Center"
+                                   Grid.ColumnSpan="2"
+                                   Grid.Row="1"
+                                   CornerRadius="20"
+                                   BindingContext="{Binding Equipments}"
+                                  HeightRequest="30"
+                                   Margin="10,-20,10,0">
+                                <SearchBar x:Name="searchBar" PlaceholderColor="LightGray" TextColor="#000000" HorizontalOptions="FillAndExpand" VerticalOptions="Center"   Text="{Binding Path=BindingContext.FilterText, Source={x:Reference lv_Equipment } }" d:Placeholder="{extensions:Translate SearchWithThreeDot}"/>
+                            </Frame>
+                        
+                        </Grid>
+
+                <ListView BackgroundColor="White" x:Name="lv_Equipment" IsVisible="False" HeightRequest="150" HasUnevenRows="True" SeparatorVisibility="Default" ItemsSource="{Binding Equipments}" IsPullToRefreshEnabled="true" IsRefreshing="{Binding IsBusy}"  ItemAppearing="ListView_OnItemAppearing">
+                    <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <Frame HasShadow="true"  Margin="5">
+
+                                <StackLayout Orientation="Horizontal" Margin="-15"  >
+                                    <Grid HorizontalOptions="FillAndExpand"  >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="6.5*" />
+                                            <ColumnDefinition Width="5*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions  >
+                                            <RowDefinition Height="0.5*" />
+
+                                        </Grid.RowDefinitions>
+                                        <StackLayout
+                                                    Grid.Column="0"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center">
+
+                                            <Image Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.ic_EqpIcon.png'}" Grid.Column="0"/>
+                                        </StackLayout>
+                                        <StackLayout
+                                                    Grid.Column="1"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Center">
+                                            <StackLayout>
+                                                <Label
+                                                    FontFamily="{StaticResource RegularFontFamily}"
+                                                    FontSize="{StaticResource StatsCaptionFontSize}"
+                                                    HorizontalOptions="StartAndExpand"
+                                                    Text="{Binding ResourceNumber}"
+                                                    TextColor="{StaticResource TextColor}"
+                                                    VerticalOptions="CenterAndExpand" />
+
+                                            </StackLayout>
+
+                                            <StackLayout>
+                                                <Label
+                                                    FontFamily="{StaticResource RegularFontFamily}"
+                                                    FontSize="{StaticResource ButtonFontSize}"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Text="{Binding Name }"
+                                                    TextColor="{StaticResource LightTextColor}"
+                                                    VerticalOptions="CenterAndExpand" />
+                                            </StackLayout>
+                                        </StackLayout>
+
+
+
+                                        <StackLayout  Grid.Column="2"  VerticalOptions="Center" HorizontalOptions="End" >
+                                            <CheckBox x:Name="chk_reservedResources" IsVisible="false" BindingContext="{Binding .}" CheckedChanged="chkEqup_CheckedChanged" IsChecked="{Binding IsChecked}">
+                                                <CheckBox.Triggers>
+                                                    <DataTrigger TargetType="CheckBox" Binding="{Binding ReservedByName}" Value="N/A">
+                                                        <Setter Property="IsVisible" Value="true"/>
+
+                                                    </DataTrigger>
+                                                </CheckBox.Triggers>
+                                            </CheckBox>
+                                            <Label FontSize="Small" HorizontalTextAlignment="Center" IsVisible="false" Text="{Binding ReservedByName}">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding IsReservedByOther}" Value="true">
+                                                        <Setter Property="IsVisible" Value="true"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                        </StackLayout>
+                                    </Grid>
+
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Done" BackgroundColor="{StaticResource DarkGreenColor}" Clicked="Button_Clicked"  TextColor="White"/>
+
+            </StackLayout>
+            <!--#endregion-->
+            <!--#region  Add Equipment Button-->
+            <ImageButton Grid.Row="2"
+                        x:Name="ic_addEmp" 
+                        BackgroundColor="Transparent" 
+                        CornerRadius="20" 
+                        Aspect="AspectFit" 
+                        AbsoluteLayout.LayoutBounds="1,1,.25,.25"
+                        AbsoluteLayout.LayoutFlags="All" 
+                        VerticalOptions="End" 
+                        HorizontalOptions="EndAndExpand" 
+                        Margin="0 10 10 0" 
+                        Clicked="ic_addEmp_Clicked"
+                        WidthRequest="50" 
+                        HeightRequest="50" Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.AddEmployees.png'}"></ImageButton>
+            <!--#endregion-->
+        </AbsoluteLayout>
+    </ContentPage.Content>
+    <ContentPage.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="Appearing">
+            <behaviors:ActionCollection>
+                <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+            </behaviors:ActionCollection>
+        </behaviors:EventHandlerBehavior>
+    </ContentPage.Behaviors>
+</ContentPage>

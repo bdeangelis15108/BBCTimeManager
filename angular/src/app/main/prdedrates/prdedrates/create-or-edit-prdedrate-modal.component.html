@@ -1,0 +1,62 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #prdedrateForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="prdedrate.id">{{l("EditPRDEDRATE")}}</span>
+                        <span *ngIf="!prdedrate.id">{{l("CreateNewPRDEDRATE")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="PRCLASSUNIONNUM">{{l("PRCLASS")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="PRCLASSUNIONNUM" name="prclassUNIONNUM" [(ngModel)]="prclassUNIONNUM" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectPRCLASSModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setUNIONNUMNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="prdedrate.unionnum" [(ngModel)]="prdedrate.unionnum" type="text" required hidden>
+		 
+
+								<div class="form-group">
+									<label for="PRDEDRATE_UNIONLOCAL">{{l("UNIONLOCAL")}}</label>
+									<input type="text" id="PRDEDRATE_UNIONLOCAL" class="form-control" [(ngModel)]="prdedrate.unionlocal" name="UNIONLOCAL"   minlength="1"  maxlength="100" />
+								</div>
+					
+								<div class="form-group">
+									<label for="PRDEDRATE_CLASS">{{l("CLASS")}}</label>
+									<input type="text" id="PRDEDRATE_CLASS" class="form-control" [(ngModel)]="prdedrate.class" name="CLASS"   minlength="1"  maxlength="100" />
+								</div>
+					
+								<div class="form-group">
+									<label for="PRDEDRATE_DEDTYPE">{{l("DEDTYPE")}}</label>
+									<input type="number" id="PRDEDRATE_DEDTYPE" class="form-control" [(ngModel)]="prdedrate.dedtype" name="DEDTYPE"  min="1"  max="10"/>
+								</div>
+					
+								<div class="form-group">
+									<label for="PRDEDRATE_PERHR">{{l("PERHR")}}</label>
+									<input type="number" id="PRDEDRATE_PERHR" class="form-control" [(ngModel)]="prdedrate.perhr" name="PERHR"  min="1"  max="100"/>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!prdedrateForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<prdedratePRCLASSLookupTableModal #prdedratePRCLASSLookupTableModal (modalSave)="getNewUNIONNUM()"></prdedratePRCLASSLookupTableModal>
+		 
+</div>

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:Nucleus.ViewModels.Base;assembly=Nucleus.Mobile.Shared"
+             x:Class="Nucleus.Views.HomeView"
+             base:ViewManager.AutoWireViewModel="true"
+             xmlns:extensions="clr-namespace:Nucleus.Extensions.MarkupExtensions;assembly=Nucleus.Mobile.Shared" xmlns:behaviors="clr-namespace:Nucleus.Behaviors"
+             Title="{Binding Title}" >
+   <ContentPage.Content>
+        <StackLayout Grid.Row="1" BackgroundColor="{StaticResource DefaultBackgroundColor}">
+            <ListView x:Name="lv_Logdisplay"
+                            HasUnevenRows="True"
+                            SeparatorVisibility="None"
+                      IsEnabled="{Binding IsSubmitted}"
+                      ItemsSource="{Binding PayPeriodLists}"
+                      ItemTapped="lv_Logdisplay_ItemTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame HasShadow="true"  Margin="10">
+                                <StackLayout Orientation="Horizontal"  >
+                                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Center" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="4.5*" />
+                                            <ColumnDefinition Width="2.5*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions  >
+                                            <RowDefinition Height="0.5*" />
+                                        </Grid.RowDefinitions>
+
+                                        <StackLayout
+                                                    Grid.Column="0"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Fill">
+                                            <Grid HorizontalOptions="Start"  IsVisible="True" VerticalOptions="CenterAndExpand">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.dateBox.png'}"
+                                                            Grid.Column="0" Aspect="AspectFit"/>
+                                                <Label
+                                                            Grid.Column="0"
+                                                            FontFamily="{StaticResource MediumFontFamily}"
+                                                            FontSize="{StaticResource TitleFontSize}"
+                                                            HorizontalOptions="CenterAndExpand"
+                                                            HorizontalTextAlignment="Center"
+                                                            Text="{Binding Date}"
+                                                            TextColor="Black"
+                                                            VerticalTextAlignment="Center" />
+                                            </Grid>
+                                        </StackLayout>
+
+                                        <StackLayout  Grid.Column="1">
+                                            <StackLayout>
+                                                <Label
+                                                    FontFamily="{StaticResource RegularFontFamily}"
+                                                    FontSize="{StaticResource StatsNumberFontSize}"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Text="{Binding Day}"
+                                                    TextColor="{StaticResource TextColor}"
+                                                    VerticalOptions="CenterAndExpand" />
+                                            </StackLayout>
+
+                                            <StackLayout>
+                                                <Label
+                                                    FontFamily="{StaticResource RegularFontFamily}"
+                                                    FontSize="{StaticResource ButtonFontSize}"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Text="{Binding DateofMonthandYear}"
+                                                    TextColor="{StaticResource LightTextColor}"
+                                                    VerticalOptions="CenterAndExpand" />
+                                            </StackLayout>
+                                        </StackLayout>
+
+                                        <StackLayout  Grid.Column="2" VerticalOptions="CenterAndExpand" HorizontalOptions="End"  >
+                                            <Image Grid.Column="0">
+                                                <Image.Triggers>
+                                                    <DataTrigger TargetType="Image" Binding="{Binding IsSubmitted}" Value="true">
+                                                        <Setter Property="Source" Value="{extensions:ImageSource 'Nucleus.UI.Assets.Images.edit.png'}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Image"  Binding="{Binding IsSubmitted}" Value="false">
+                                                        <Setter Property="Source" Value="{extensions:ImageSource 'Nucleus.UI.Assets.Images.cloud.png'}"/>
+                                                    </DataTrigger>
+                                                </Image.Triggers>
+                                            </Image>
+                                        </StackLayout>
+                                    </Grid>
+
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+    <ContentPage.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="Appearing">
+            <behaviors:ActionCollection>
+                <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+            </behaviors:ActionCollection>
+        </behaviors:EventHandlerBehavior>
+    </ContentPage.Behaviors>
+</ContentPage>

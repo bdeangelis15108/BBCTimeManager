@@ -1,0 +1,66 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #resourceReservationsForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="resourceReservations.id">{{l("EditResourceReservations")}}</span>
+                        <span *ngIf="!resourceReservations.id">{{l("CreateNewResourceReservations")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="UserName">{{l("User")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="UserName" name="userName" [(ngModel)]="userName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectUserModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setUserIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="resourceReservations.userId" [(ngModel)]="resourceReservations.userId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="ResourcesName">{{l("Resources")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ResourcesName" name="resourcesName" [(ngModel)]="resourcesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectResourcesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setResourcesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="resourceReservations.resourcesId" [(ngModel)]="resourceReservations.resourcesId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="ResourceReservations_ReservedFrom">{{l("ReservedFrom")}}</label>
+									 <input class="form-control m-input" type="datetime" bsDatepicker datePickerMomentModifier [(date)]="resourceReservations.reservedFrom" id="ResourceReservations_ReservedFrom" name="ResourceReservations_ReservedFrom">
+								</div>
+					
+								<div class="form-group">
+									<label for="ResourceReservations_ReservedUntil">{{l("ReservedUntil")}}</label>
+									 <input class="form-control m-input" type="datetime" bsDatepicker datePickerMomentModifier [(date)]="resourceReservations.reservedUntil" id="ResourceReservations_ReservedUntil" name="ResourceReservations_ReservedUntil">
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!resourceReservationsForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<resourceReservationsUserLookupTableModal #resourceReservationsUserLookupTableModal (modalSave)="getNewUserId()"></resourceReservationsUserLookupTableModal>
+		 <resourceReservationsResourcesLookupTableModal #resourceReservationsResourcesLookupTableModal (modalSave)="getNewResourcesId()"></resourceReservationsResourcesLookupTableModal>
+		 
+</div>

@@ -1,0 +1,61 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #prclassForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="prclass.id">{{l("EditPRCLASS")}}</span>
+                        <span *ngIf="!prclass.id">{{l("CreateNewPRCLASS")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="JCUNIONUNIONNUM">{{l("JCUNION")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JCUNIONUNIONNUM" name="jcunionUNIONNUM" [(ngModel)]="jcunionUNIONNUM" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectJCUNIONModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setUNIONNUMNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="prclass.unionnum" [(ngModel)]="prclass.unionnum" type="text" required hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="PREMPLOYEECLASS">{{l("PREMPLOYEE")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="PREMPLOYEECLASS" name="premployeeCLASS" [(ngModel)]="premployeeCLASS" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectPREMPLOYEEModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setCLASSNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="prclass.class" [(ngModel)]="prclass.class" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="PRCLASS_NAME">{{l("NAME")}}</label>
+									<input type="text" id="PRCLASS_NAME" class="form-control" [(ngModel)]="prclass.name" name="NAME"   minlength="1"  maxlength="100" />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!prclassForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<prclassJCUNIONLookupTableModal #prclassJCUNIONLookupTableModal (modalSave)="getNewUNIONNUM()"></prclassJCUNIONLookupTableModal>
+		 <prclassPREMPLOYEELookupTableModal #prclassPREMPLOYEELookupTableModal (modalSave)="getNewCLASS()"></prclassPREMPLOYEELookupTableModal>
+		 
+</div>

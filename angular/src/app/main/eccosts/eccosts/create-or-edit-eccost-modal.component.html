@@ -1,0 +1,52 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #eccostForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="eccost.id">{{l("EditECCOST")}}</span>
+                        <span *ngIf="!eccost.id">{{l("CreateNewECCOST")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="EQUIPMENTEQUIPNUM">{{l("EQUIPMENT")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="EQUIPMENTEQUIPNUM" name="equipmentEQUIPNUM" [(ngModel)]="equipmentEQUIPNUM" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectEQUIPMENTModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setEQUIPNUMNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="eccost.equipnum" [(ngModel)]="eccost.equipnum" type="text" required hidden>
+		 
+
+								<div class="form-group">
+									<label for="ECCOST_CODENUM">{{l("CODENUM")}}</label>
+									<input type="text" id="ECCOST_CODENUM" class="form-control" [(ngModel)]="eccost.codenum" name="CODENUM"   minlength="1"  maxlength="10" />
+								</div>
+					
+								<div class="form-group">
+									<label for="ECCOST_ESTHOURLY">{{l("ESTHOURLY")}}</label>
+									<input type="text" id="ECCOST_ESTHOURLY" class="form-control" [(ngModel)]="eccost.esthourly" name="ESTHOURLY"   minlength="1"  maxlength="50" />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!eccostForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<eccostEQUIPMENTLookupTableModal #eccostEQUIPMENTLookupTableModal (modalSave)="getNewEQUIPNUM()"></eccostEQUIPMENTLookupTableModal>
+		 
+</div>

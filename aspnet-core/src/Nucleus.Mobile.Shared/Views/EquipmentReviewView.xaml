@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:Nucleus.ViewModels.Base;assembly=Nucleus.Mobile.Shared"
+             x:Class="Nucleus.Views.EquipmentReviewView"
+             base:ViewManager.AutoWireViewModel="true"
+             xmlns:behaviors="clr-namespace:Nucleus.Behaviors;assembly=Nucleus.Mobile.Shared"
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="CONFIRM" Clicked="ToolbarItem_Clicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <!--<StackLayout>
+
+            <ListView 
+                          Grid.Row="0"
+                            BackgroundColor="Gray"
+                HorizontalOptions="FillAndExpand"
+               
+                          x:Name="lv_EquipmentR" 
+                          SeparatorColor="Black"
+                          SeparatorVisibility="Default"
+                ItemsSource="{Binding listofEquipment}">
+                <ListView.ItemTemplate>
+                    <DataTemplate >
+                        <ViewCell >
+                            <StackLayout Orientation="Horizontal">
+                                <Grid x:Name="gv_TimeSheet" HorizontalOptions="FillAndExpand"  >
+                                    <Grid.ColumnDefinitions >
+                                        <ColumnDefinition Width="2*" ></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0" Margin="5,10" Text="{Binding .}"
+                                                       FontAttributes="Bold"
+                                                       HorizontalTextAlignment="Center"/>
+
+                                </Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+            <ListView HasUnevenRows="True" 
+                          Grid.Row="1"
+                            BackgroundColor="Gray"
+                          x:Name="lv_EquipmentReview" 
+                          SeparatorColor="Black"
+                          SeparatorVisibility="Default"
+                      ItemsSource="{Binding EquipmentToReviewAmount}">
+                <ListView.Header>
+                    <ScrollView HorizontalOptions="FillAndExpand"    VerticalOptions="FillAndExpand" Orientation="Horizontal">
+                        <StackLayout Margin="0,0,0,2" >
+                            <Grid x:Name="gv_EmpReviews">
+                                <Grid.RowDefinitions >
+                                    <RowDefinition Height="2*"></RowDefinition>
+
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions >
+                                    <ColumnDefinition Width="100" ></ColumnDefinition>
+                                    <ColumnDefinition Width="5*" ></ColumnDefinition>
+
+
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Grid.Column="0" BackgroundColor="#B7B7B7" >
+                                    <Label Text="{Binding SelectedDT}" HorizontalTextAlignment="Center" FontAttributes="Bold"
+                                           TextColor="Black"
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="1" BackgroundColor="{StaticResource GrayColor}" Margin="-3,0,0,0" >
+                                    <Label Text="{Binding Job}"
+                                           Padding="10"
+                                           TextColor="Black"
+                                            FontFamily="{StaticResource RegularFontFamily}"
+                                            FontSize="{StaticResource StatsCaptionFontSize}"
+                                           HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+
+                            </Grid>
+                        </StackLayout>
+                    </ScrollView>
+                </ListView.Header>
+                <ListView.ItemTemplate >
+                    <DataTemplate >
+                        <ViewCell >
+                            <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal">
+                                <StackLayout>
+                                    <Grid x:Name="gv_TimeSheet"  >
+                                        <Grid.RowDefinitions >
+                                            <RowDefinition Height="2*"></RowDefinition>
+
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions >
+                                            <ColumnDefinition Width="100" ></ColumnDefinition>
+                                            <ColumnDefinition Width="5*" ></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        --><!--#region col 1--><!--
+
+                                        <StackLayout Grid.Column="0" 
+                                                     BackgroundColor="{StaticResource GrayColor}" >
+                                            <StackLayout >
+                                                <Label Text="{Binding resourceName}"
+                                                       Margin="5,10"
+                                                       FontAttributes="Bold"
+                                                       HorizontalTextAlignment="Center"
+                                                       />
+                                            </StackLayout>
+                                        </StackLayout>
+
+                                        --><!--#endregion-->
+
+                                       <!--- #region col 2--><!--
+
+                                        <StackLayout Grid.Column="1" Margin="-3,0,0,0" BackgroundColor="White"  >
+
+                                            <Label Margin="5,10" Text="{Binding TotalUsageAmount}"
+                                                       FontAttributes="Bold"
+                                                       HorizontalTextAlignment="Center"/>
+
+                                        </StackLayout>
+
+                                        --><!--#endregion--><!--
+
+                                    </Grid>
+                                </StackLayout>
+                            </ScrollView>
+                        </ViewCell>
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>-->
+
+
+
+
+    </ContentPage.Content>
+    <ContentPage.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="Appearing">
+            <behaviors:ActionCollection>
+                <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+            </behaviors:ActionCollection>
+        </behaviors:EventHandlerBehavior>
+    </ContentPage.Behaviors>
+</ContentPage>

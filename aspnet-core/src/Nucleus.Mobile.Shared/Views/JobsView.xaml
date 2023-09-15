@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:Nucleus.ViewModels.Base;assembly=Nucleus.Mobile.Shared"
+             x:Class="Nucleus.Views.JobsView"
+             base:ViewManager.AutoWireViewModel="true"
+             xmlns:extensions="clr-namespace:Nucleus.Extensions.MarkupExtensions;assembly=Nucleus.Mobile.Shared"
+             xmlns:behaviors="clr-namespace:Nucleus.Behaviors"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <StackLayout Grid.Row="1"  BackgroundColor="{StaticResource DefaultBackgroundColor}">
+            <StackLayout HorizontalOptions="CenterAndExpand">
+                <Button x:Name="btn_allJobs"
+                        Text="All Jobs" 
+                        WidthRequest="200" 
+                        HeightRequest="35" 
+                        CornerRadius="10" 
+                        Margin="40,10,40,0" 
+                        VerticalOptions="Center"
+                        BackgroundColor="{StaticResource WhiteColor}"
+                        Clicked="btn_allJobs_Clicked"/>
+            </StackLayout>
+            <StackLayout HorizontalOptions="CenterAndExpand">
+                <Button x:Name="btn_myJobs"
+                        Text="My Jobs" 
+                        WidthRequest="200" 
+                        HeightRequest="35" 
+                        CornerRadius="10" 
+                        Margin="40,-10,40,0" 
+                        VerticalOptions="Center"
+                        IsVisible="False"
+                        BackgroundColor="{StaticResource WhiteColor}"
+                        Clicked="btn_myJobs_Clicked"/>
+            </StackLayout>
+            <SearchBar Grid.Row="0" 
+                       Grid.Column="0" 
+                       Text="{Binding FilterText}" 
+                       Placeholder="{extensions:Translate SearchWithThreeDot}"/>
+            <ListView x:Name="lvJobs"
+                            HasUnevenRows="True"
+                      ItemsSource="{Binding ListofJobs}"
+                      ItemAppearing="ListView_OnItemAppearing"
+                      ItemTapped="lvJobs_ItemTapped"
+                            SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame HasShadow="true"  Margin="5">
+                                <StackLayout Orientation="Horizontal" Margin="-15"  >
+                                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="Center" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.5*" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="5*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions  >
+                                            <RowDefinition Height="0.5*" />
+                                        </Grid.RowDefinitions>
+                                        <StackLayout Grid.Column="0">
+                                        </StackLayout>
+                                        <StackLayout
+                                                    Grid.Column="1"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Fill">
+
+                                            <Image WidthRequest="50" HeightRequest="50"
+                                                Source="{extensions:ImageSource 'Nucleus.UI.Assets.Images.Ic_jobsInGreen.png'}"/>
+
+                                        </StackLayout>
+
+                                        <StackLayout  Grid.Column="2" Margin="-20,0,0,0">
+                                            <StackLayout>
+                                                <Label
+                                                    FontFamily="{StaticResource RegularFontFamily}"
+                                                    FontSize="{StaticResource StatsCaptionFontSize}"
+                                                    HorizontalOptions="StartAndExpand"
+                                                    Text="{Binding Name}"
+                                                    TextColor="{StaticResource TextColor}"
+                                                    VerticalOptions="CenterAndExpand" />
+                                            </StackLayout>
+
+                                            <StackLayout>
+                                                <Label
+                                                    FontFamily="{StaticResource RegularFontFamily}"
+                                                    FontSize="{StaticResource ButtonFontSize}"
+                                                    HorizontalOptions="FillAndExpand"
+                                                    Text="{Binding Code}"
+                                                    TextColor="{StaticResource LightTextColor}"
+                                                    VerticalOptions="CenterAndExpand" />
+                                            </StackLayout>
+                                        </StackLayout>
+
+
+                                    </Grid>
+
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+        
+    </ContentPage.Content>
+    <ContentPage.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="Appearing">
+            <behaviors:ActionCollection>
+                <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+            </behaviors:ActionCollection>
+        </behaviors:EventHandlerBehavior>
+    </ContentPage.Behaviors>
+
+</ContentPage>

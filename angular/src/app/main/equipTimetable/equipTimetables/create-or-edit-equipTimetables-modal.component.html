@@ -1,0 +1,161 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #equipTimetablesForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="equipTimetables.id">{{l("EditEquipTimetables")}}</span>
+                        <span *ngIf="!equipTimetables.id">{{l("CreateNewEquipTimetables")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="PayPeriodsName">{{l("PayPeriods")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="PayPeriodsName" name="payPeriodsName" [(ngModel)]="payPeriodsName" type="text" disabled>     
+                            <div class="input-group-append d-none">
+                                <button class="btn btn-primary blue" (click)="openSelectPayPeriodsModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend d-none">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setPeriodDateNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="equipTimetables.periodDate" [(ngModel)]="equipTimetables.periodDate" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="ResourcesResourceNumber">{{l("Resource")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="ResourcesResourceNumber" name="resourcesResourceNumber" [(ngModel)]="resourcesResourceNumber" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectResourcesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setResourcesCodeNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="equipTimetables.resourcesCode" [(ngModel)]="equipTimetables.resourcesCode" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="JobPhaseCodesName">{{l("JobPhaseCodes")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobPhaseCodesName" name="jobPhaseCodesName" [(ngModel)]="jobPhaseCodesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectJobPhaseCodesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setPhaseCodeNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="equipTimetables.phaseCode" [(ngModel)]="equipTimetables.phaseCode" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="JobCategoriesName">{{l("JobCategories")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobCategoriesName" name="jobCategoriesName" [(ngModel)]="jobCategoriesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectJobCategoriesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setCategoryCodeNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="equipTimetables.categoryCode" [(ngModel)]="equipTimetables.categoryCode" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="JobsName">{{l("Jobs")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobsName" name="jobsName" [(ngModel)]="jobsName" type="text" disabled>     
+                            <div class="input-group-append d-none">
+                                <button class="btn btn-primary blue" (click)="openSelectJobsModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend d-none">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setJobCodeNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="equipTimetables.jobCode" [(ngModel)]="equipTimetables.jobCode" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="EquipTimetables_Day1">{{l("Day1")}}</label>
+									<input type="number" #EquipTimetables_Day1="ngModel" id="EquipTimetables_Day1" class="form-control" [(ngModel)]="equipTimetables.day1" name="Day1"  min="2"  max="18" />
+									<validation-messages [formCtrl]="EquipTimetables_Day1"></validation-messages>
+								</div>
+					
+								<div class="form-group">
+									<label for="EquipTimetables_Day2">{{l("Day2")}}</label>
+									<input type="number" #EquipTimetables_Day2="ngModel" id="EquipTimetables_Day2" class="form-control" [(ngModel)]="equipTimetables.day2" name="Day2"  min="2"  max="18" />
+									<validation-messages [formCtrl]="EquipTimetables_Day2"></validation-messages>
+								</div>
+					
+								<div class="form-group">
+									<label for="EquipTimetables_Day3">{{l("Day3")}}</label>
+									<input type="number" #EquipTimetables_Day3="ngModel" id="EquipTimetables_Day3" class="form-control" [(ngModel)]="equipTimetables.day3" name="Day3"  min="2"  max="18" />
+									<validation-messages [formCtrl]="EquipTimetables_Day3"></validation-messages>
+								</div>
+					
+								<div class="form-group">
+									<label for="EquipTimetables_Day4">{{l("Day4")}}</label>
+									<input type="number" #EquipTimetables_Day4="ngModel" id="EquipTimetables_Day4" class="form-control" [(ngModel)]="equipTimetables.day4" name="Day4"  min="2"  max="18" />
+									<validation-messages [formCtrl]="EquipTimetables_Day4"></validation-messages>
+								</div>
+					
+								<div class="form-group">
+									<label for="EquipTimetables_Day5">{{l("Day5")}}</label>
+									<input type="number" #EquipTimetables_Day5="ngModel" id="EquipTimetables_Day5" class="form-control" [(ngModel)]="equipTimetables.day5" name="Day5"  min="2"  max="18" />
+									<validation-messages [formCtrl]="EquipTimetables_Day5"></validation-messages>
+								</div>
+					
+								<div class="form-group">
+									<label for="EquipTimetables_Day6">{{l("Day6")}}</label>
+									<input type="number" #EquipTimetables_Day6="ngModel" id="EquipTimetables_Day6" class="form-control" [(ngModel)]="equipTimetables.day6" name="Day6"  min="2"  max="18" />
+									<validation-messages [formCtrl]="EquipTimetables_Day6"></validation-messages>
+								</div>
+					
+								<div class="form-group">
+									<label for="EquipTimetables_Day7">{{l("Day7")}}</label>
+									<input type="number" #EquipTimetables_Day7="ngModel" id="EquipTimetables_Day7" class="form-control" [(ngModel)]="equipTimetables.day7" name="Day7"  min="2"  max="18" />
+									<validation-messages [formCtrl]="EquipTimetables_Day7"></validation-messages>
+								</div>
+					
+								<div class="form-group d-none">
+									<label for="EquipTimetables_Amount">{{l("Amount")}}</label>
+									<input type="number" #EquipTimetables_Amount="ngModel" id="EquipTimetables_Amount" class="form-control" [(ngModel)]="equipTimetables.amount" name="Amount"  min="2"  max="18" />
+									<validation-messages [formCtrl]="EquipTimetables_Amount"></validation-messages>
+								</div>
+					
+								<div class="form-group d-none">
+									<label for="EquipTimetables_CreatedOn">{{l("CreatedOn")}}</label>
+									 <input class="form-control m-input" #EquipTimetables_CreatedOn type="datetime" bsDatepicker  datePickerMomentModifier  [(date)]="equipTimetables.createdOn" id="EquipTimetables_CreatedOn" name="EquipTimetables_CreatedOn">
+									<validation-messages [formCtrl]="EquipTimetables_CreatedOn"></validation-messages>
+								</div>
+					
+								<br/><div class="m-checkbox-list  d-none">
+									<label for="EquipTimetables_IsActive" class="kt-checkbox">
+										<input id="EquipTimetables_IsActive" #EquipTimetables_IsActive="ngModel" type="checkbox" name="IsActive" [(ngModel)]="equipTimetables.isActive"> 
+										{{l("IsActive")}}
+										<span></span>
+									</label>
+									<validation-messages [formCtrl]="EquipTimetables_IsActive"></validation-messages>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!equipTimetablesForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<equipTimetablesPayPeriodsLookupTableModal #equipTimetablesPayPeriodsLookupTableModal (modalSave)="getNewPeriodDate()"></equipTimetablesPayPeriodsLookupTableModal>
+		 <equipTimetablesResourcesLookupTableModal #equipTimetablesResourcesLookupTableModal (modalSave)="getNewResourcesCode()"></equipTimetablesResourcesLookupTableModal>
+		 <equipTimetablesJobPhaseCodesLookupTableModal #equipTimetablesJobPhaseCodesLookupTableModal (modalSave)="getNewPhaseCode()"></equipTimetablesJobPhaseCodesLookupTableModal>
+		 <equipTimetablesJobCategoriesLookupTableModal #equipTimetablesJobCategoriesLookupTableModal (modalSave)="getNewCategoryCode()"></equipTimetablesJobCategoriesLookupTableModal>
+		 <equipTimetablesJobsLookupTableModal #equipTimetablesJobsLookupTableModal (modalSave)="getNewJobCode()"></equipTimetablesJobsLookupTableModal>
+		 
+</div>

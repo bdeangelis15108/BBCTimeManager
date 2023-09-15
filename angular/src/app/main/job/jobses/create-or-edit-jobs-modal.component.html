@@ -1,0 +1,81 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #jobsForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="jobs.id">{{l("EditJobs")}}</span>
+                        <span *ngIf="!jobs.id">{{l("CreateNewJobs")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="AddressesLinne1">{{l("Addresses")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="AddressesLinne1" name="addressesLinne1" [(ngModel)]="addressesLinne1" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectAddressesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setAddressesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobs.addressesId" [(ngModel)]="jobs.addressesId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="JobClassesName">{{l("JobClasses")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobClassesName" name="jobClassesName" [(ngModel)]="jobClassesName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectJobClassesModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setJobClassesIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobs.jobClassesId" [(ngModel)]="jobs.jobClassesId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="Jobs_Code">{{l("Code")}}</label>
+									<input type="text" id="Jobs_Code" class="form-control" [(ngModel)]="jobs.code" name="Code"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="Jobs_Name">{{l("Name")}}</label>
+									<input type="text" id="Jobs_Name" class="form-control" [(ngModel)]="jobs.name" name="Name"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="Jobs_StartDate">{{l("StartDate")}}</label>
+									 <input class="form-control m-input" type="datetime" bsDatepicker datePickerMomentModifier [(date)]="jobs.startDate" id="Jobs_StartDate" name="Jobs_StartDate">
+								</div>
+					
+								<div class="form-group">
+									<label for="Jobs_EndDate">{{l("EndDate")}}</label>
+									 <input class="form-control m-input" type="datetime" bsDatepicker datePickerMomentModifier [(date)]="jobs.endDate" id="Jobs_EndDate" name="Jobs_EndDate">
+								</div>
+					
+								<div class="form-group">
+									<label for="Jobs_Status">{{l("Status")}}</label>
+									<input type="number" id="Jobs_Status" class="form-control" [(ngModel)]="jobs.status" name="Status"  />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!jobsForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<jobsAddressesLookupTableModal #jobsAddressesLookupTableModal (modalSave)="getNewAddressesId()"></jobsAddressesLookupTableModal>
+		 <jobsJobClassesLookupTableModal #jobsJobClassesLookupTableModal (modalSave)="getNewJobClassesId()"></jobsJobClassesLookupTableModal>
+		 
+</div>

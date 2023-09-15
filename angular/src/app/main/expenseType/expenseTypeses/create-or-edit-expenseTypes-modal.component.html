@@ -1,0 +1,48 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #expenseTypesForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="expenseTypes.id">{{l("EditExpenseTypes")}}</span>
+                        <span *ngIf="!expenseTypes.id">{{l("CreateNewExpenseTypes")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+
+								<div class="form-group">
+									<label for="ExpenseTypes_Name">{{l("Name")}}</label>
+									<input type="text" id="ExpenseTypes_Name" class="form-control" [(ngModel)]="expenseTypes.name" name="Name"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="ExpenseTypes_Description">{{l("Description")}}</label>
+									<input type="text" id="ExpenseTypes_Description" class="form-control" [(ngModel)]="expenseTypes.description" name="Description"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="ExpenseTypes_Code">{{l("Code")}}</label>
+									<input type="text" id="ExpenseTypes_Code" class="form-control" [(ngModel)]="expenseTypes.code" name="Code"   minlength="1"  maxlength="50" />
+								</div>
+					
+								<div class="form-group">
+									<label for="ExpenseTypes_Icon">{{l("Icon")}}</label>
+									<input type="number" id="ExpenseTypes_Icon" class="form-control" [(ngModel)]="expenseTypes.icon" name="Icon"  />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!expenseTypesForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

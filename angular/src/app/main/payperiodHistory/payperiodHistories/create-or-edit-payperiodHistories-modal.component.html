@@ -1,0 +1,55 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #payperiodHistoriesForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="payperiodHistories.id">{{l("EditPayperiodHistories")}}</span>
+                        <span *ngIf="!payperiodHistories.id">{{l("CreateNewPayperiodHistories")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="PayPeriodsName">{{l("PayPeriods")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="PayPeriodsName" name="payPeriodsName" [(ngModel)]="payPeriodsName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectPayPeriodsModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setPayPeriodsIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="payperiodHistories.payPeriodsId" [(ngModel)]="payperiodHistories.payPeriodsId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="PayperiodHistories_period">{{l("period")}}</label>
+									<input type="text" id="PayperiodHistories_period" class="form-control" [(ngModel)]="payperiodHistories.period" name="period"   minlength="10"  maxlength="20" />
+								</div>
+					
+								<br/><div class="m-checkbox-list">
+									<label for="PayperiodHistories_active" class="kt-checkbox">
+										<input id="PayperiodHistories_active" type="checkbox" name="active" [(ngModel)]="payperiodHistories.active"> 
+										{{l("active")}}
+										<span></span>
+									</label>
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!payperiodHistoriesForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<payperiodHistoriesPayPeriodsLookupTableModal #payperiodHistoriesPayPeriodsLookupTableModal (modalSave)="getNewPayPeriodsId()"></payperiodHistoriesPayPeriodsLookupTableModal>
+		 
+</div>

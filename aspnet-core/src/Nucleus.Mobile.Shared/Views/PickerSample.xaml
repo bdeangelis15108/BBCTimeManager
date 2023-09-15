@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:base="clr-namespace:Nucleus.ViewModels.Base;assembly=Nucleus.Mobile.Shared"
+             xmlns:extensions="clr-namespace:Nucleus.Extensions.MarkupExtensions;assembly=Nucleus.Mobile.Shared"
+             xmlns:behaviors="clr-namespace:Nucleus.Behaviors"
+             x:Class="Nucleus.Views.PickerSample"
+             base:ViewManager.AutoWireViewModel="true"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+
+        <StackLayout >
+
+            <ListView HasUnevenRows="True" 
+                          x:Name="lv_Pickersample" 
+                          SeparatorColor="Black"
+                          SeparatorVisibility="Default" >
+                <ListView.ItemTemplate >
+
+                    <DataTemplate >
+                        <ViewCell >
+                            <ScrollView HorizontalOptions="CenterAndExpand" VerticalOptions="Fill" Orientation="Horizontal">
+                                <StackLayout>
+                                    <Grid x:Name="gv_TimeSheet" BackgroundColor="LightGray"  >
+                                        <Grid.RowDefinitions >
+                                            
+                                            <RowDefinition Height="1*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions >
+                                            <ColumnDefinition Width="2.5*" ></ColumnDefinition>
+                                          
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--#region col 1-->
+
+                                        <StackLayout Grid.Column="0" 
+                                                     Grid.Row="0"
+                                                     BackgroundColor="{StaticResource LightGreenColor}" >
+                                            <StackLayout >
+
+
+
+                                            </StackLayout>
+
+
+                                        </StackLayout>
+                                        <!--#endregion-->
+
+
+                                    </Grid>
+                                </StackLayout>
+                            </ScrollView>
+                        </ViewCell>
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+        </StackLayout>
+
+    </ContentPage.Content>
+
+
+</ContentPage>

@@ -1,0 +1,57 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #unionPayRatesForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="unionPayRates.id">{{l("EditUnionPayRates")}}</span>
+                        <span *ngIf="!unionPayRates.id">{{l("CreateNewUnionPayRates")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="UnionsNumber">{{l("Unions")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="UnionsNumber" name="unionsNumber" [(ngModel)]="unionsNumber" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectUnionsModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setUnionsIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="unionPayRates.unionsId" [(ngModel)]="unionPayRates.unionsId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="UnionPayRates_Class">{{l("Class")}}</label>
+									<input type="text" id="UnionPayRates_Class" class="form-control" [(ngModel)]="unionPayRates.class" name="Class"   minlength="0"  maxlength="10" />
+								</div>
+					
+								<div class="form-group">
+									<label for="UnionPayRates_Dedtype">{{l("Dedtype")}}</label>
+									<input type="text" id="UnionPayRates_Dedtype" class="form-control" [(ngModel)]="unionPayRates.dedtype" name="Dedtype"   minlength="0"  maxlength="10" />
+								</div>
+					
+								<div class="form-group">
+									<label for="UnionPayRates_Perhour">{{l("Perhour")}}</label>
+									<input type="number" id="UnionPayRates_Perhour" class="form-control" [(ngModel)]="unionPayRates.perhour" name="Perhour"  min="0"  max="10" />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!unionPayRatesForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<unionPayRatesUnionsLookupTableModal #unionPayRatesUnionsLookupTableModal (modalSave)="getNewUnionsId()"></unionPayRatesUnionsLookupTableModal>
+		 
+</div>

@@ -1,0 +1,61 @@
+﻿<div bsModal #createOrEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createOrEditModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form *ngIf="active" #jobUnionsForm="ngForm" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span *ngIf="jobUnions.id">{{l("EditJobUnions")}}</span>
+                        <span *ngIf="!jobUnions.id">{{l("CreateNewJobUnions")}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close" [disabled]="saving">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                 
+
+					<div class="form-group m-form__group">
+                        <label for="JobsName">{{l("Jobs")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="JobsName" name="jobsName" [(ngModel)]="jobsName" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectJobsModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setJobsIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobUnions.jobsId" [(ngModel)]="jobUnions.jobsId" type="text"  hidden>
+		 
+					<div class="form-group m-form__group">
+                        <label for="UnionsNumber">{{l("Unions")}}</label>
+                        <div class="input-group">
+                            <input class="form-control" id="UnionsNumber" name="unionsNumber" [(ngModel)]="unionsNumber" type="text" disabled>     
+                            <div class="input-group-append">
+                                <button class="btn btn-primary blue" (click)="openSelectUnionsModal()" type="button"><i class="fa fa-search"></i> {{l("Pick")}}</button>
+                            </div> <div class="input-group-prepend">
+                                <button class="btn btn-danger btn-icon" type="button" (click)="setUnionsIdNull()"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <input class="form-control" name="jobUnions.unionsId" [(ngModel)]="jobUnions.unionsId" type="text"  hidden>
+		 
+
+								<div class="form-group">
+									<label for="JobUnions_Number">{{l("Number")}}</label>
+									<input type="text" id="JobUnions_Number" class="form-control" [(ngModel)]="jobUnions.number" name="Number"   minlength="1"  maxlength="50" />
+								</div>
+					
+
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-default" (click)="close()">{{l("Cancel")}}</button>
+                    <button type="submit" class="btn btn-primary blue" [disabled]="!jobUnionsForm.form.valid" [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot')"><i class="fa fa-save"></i> <span>{{l("Save")}}</span></button>
+                </div>
+            </form>
+        </div>
+    </div>
+<jobUnionsJobsLookupTableModal #jobUnionsJobsLookupTableModal (modalSave)="getNewJobsId()"></jobUnionsJobsLookupTableModal>
+		 <jobUnionsUnionsLookupTableModal #jobUnionsUnionsLookupTableModal (modalSave)="getNewUnionsId()"></jobUnionsUnionsLookupTableModal>
+		 
+</div>
